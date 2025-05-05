@@ -11,38 +11,26 @@ class _FirstViewState extends State<FirstView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.amber,
-        title: Text("This is my app bar"),
-        centerTitle: true,
-      ),
-      body: Column(
+      appBar: AppBar(title: const Text("Dashboard")),
+      body: ListView(
+        padding: const EdgeInsets.all(20),
         children: [
-          SizedBox(height: 8),
-          TextField(
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Enter first number",
-            ),
-            autocorrect: false,
-            autofocus: true,
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/add'),
+            child: const Text("Add Two Numbers"),
           ),
-          SizedBox(height: 8),
-          SizedBox(height: 8),
-          TextField(
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Enter Second number",
-            ),
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/circle'),
+            child: const Text("Area of Circle"),
           ),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(onPressed: () {}, child: Text("Add")),
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/interest'),
+            child: const Text("Simple Interest"),
           ),
-          SizedBox(height: 8),
-          Text("Result = 0"),
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/palindrome'),
+            child: const Text("Palindrome Number"),
+          ),
         ],
       ),
     );
