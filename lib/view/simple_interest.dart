@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logitracker/model/simple_interest_model.dart';
 
 class SimpleInterest extends StatefulWidget {
   const SimpleInterest({super.key});
@@ -14,11 +15,7 @@ class _SimpleInterestState extends State<SimpleInterest> {
 
   double result = 0;
 
-  void calculateSI(int p, int t, int r) {
-    setState(() {
-      result = p * t * r / 100;
-    });
-  }
+  late SimpleInterestModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +46,10 @@ class _SimpleInterestState extends State<SimpleInterest> {
           ),
           ElevatedButton(
             onPressed: () {
-              calculateSI(p, t, r);
+              setState(() {
+                model = SimpleInterestModel(p: p, t: t, r: r);
+                result = model.calculateInterest();
+              });
             },
             child: Text("Calculate SI"),
           ),

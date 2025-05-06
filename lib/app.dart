@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/view/add.dart';
-import 'package:logitracker/view/circle.dart';
+import 'package:logitracker/view/add_view.dart';
+import 'package:logitracker/view/circle_view.dart';
 import 'package:logitracker/view/first_view.dart';
 import 'package:logitracker/view/palindrome_number.dart';
 import 'package:logitracker/view/simple_interest.dart';
@@ -16,8 +16,8 @@ class App extends StatelessWidget {
       routes: {
         '/': (context) => const FirstView(),
         '/palindrome': (context) => const PalindromeNumber(),
-        '/add': (context) => const Add(),
-        '/circle': (context) => const Circle(),
+        '/add': (context) => const AddView(),
+        '/circle': (context) => const CircleView(),
         '/interest': (context) => const SimpleInterest(),
       },
     );

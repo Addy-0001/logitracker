@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:logitracker/model/add_model.dart';
 
-class Add extends StatefulWidget {
-  const Add({super.key});
+class AddView extends StatefulWidget {
+  const AddView({super.key});
 
   @override
-  State<Add> createState() => _AddState();
+  State<AddView> createState() => _AddViewState();
 }
 
-class _AddState extends State<Add> {
-  int num1 = 0;
-  int num2 = 0;
+class _AddViewState extends State<AddView> {
+  int first = 0;
+  int second = 0;
   int result = 0;
 
-  void add(num1, num2) {
-    setState(() {
-      result = num1 + num2;
-    });
-  }
+  late AddModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +32,7 @@ class _AddState extends State<Add> {
               border: OutlineInputBorder(),
               labelText: "Enter first number",
             ),
-            onChanged: (value) => {num1 = int.parse(value)},
+            onChanged: (value) => {first = int.parse(value)},
           ),
           SizedBox(height: 8),
           SizedBox(height: 8),
@@ -45,13 +42,16 @@ class _AddState extends State<Add> {
               border: OutlineInputBorder(),
               labelText: "Enter Second number",
             ),
-            onChanged: (value) => {num2 = int.parse(value)},
+            onChanged: (value) => {second = int.parse(value)},
           ),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                add(num1, num2);
+                setState(() {
+                  model = AddModel(first: first, second: second);
+                  result = model.add();
+                });
               },
               child: Text("Add"),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logitracker/model/palindrome_number_model.dart';
 
 class PalindromeNumber extends StatefulWidget {
   const PalindromeNumber({super.key});
@@ -10,23 +11,7 @@ class PalindromeNumber extends StatefulWidget {
 class _PalindromeNumberState extends State<PalindromeNumber> {
   bool result = false;
   int number = 0;
-  void checkPalindrome(int number) {
-    int original = number;
-    int reversed = 0;
-
-    while (number > 0) {
-      int digit = number % 10;
-      reversed = reversed * 10 + digit;
-      number ~/= 10;
-    }
-
-    bool isPalindrome = (original == reversed);
-
-    setState(() {
-      // Store result in a variable to display in the UI
-      result = isPalindrome;
-    });
-  }
+  late PalindromeNumberModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +34,10 @@ class _PalindromeNumberState extends State<PalindromeNumber> {
 
           ElevatedButton(
             onPressed: () {
-              checkPalindrome(number);
+              setState(() {
+                model = PalindromeNumberModel(number: number);
+                result = model.checkPalindrome();
+              });
             },
             child: Text("Calculate"),
           ),

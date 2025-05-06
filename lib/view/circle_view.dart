@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:logitracker/model/circle_model.dart';
 
-class Circle extends StatefulWidget {
-  const Circle({super.key});
+class CircleView extends StatefulWidget {
+  const CircleView({super.key});
 
   @override
-  State<Circle> createState() => _CircleState();
+  State<CircleView> createState() => _CircleViewState();
 }
 
-class _CircleState extends State<Circle> {
+class _CircleViewState extends State<CircleView> {
   double result = 0.0;
   int r = 0;
-  void calculateArea(value) {
-    setState(() {
-      result = r * r * 3.14;
-    });
-  }
 
+  late CircleModel model;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +26,7 @@ class _CircleState extends State<Circle> {
         children: [
           TextField(
             keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: "Enter the radius of the circle",
@@ -37,7 +36,10 @@ class _CircleState extends State<Circle> {
 
           ElevatedButton(
             onPressed: () {
-              calculateArea(r);
+              setState(() {
+                model = CircleModel(radius: r);
+                result = model.calculateArea();
+              });
             },
             child: Text("Calculate"),
           ),
