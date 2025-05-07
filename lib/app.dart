@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logitracker/view/add_view.dart';
 import 'package:logitracker/view/circle_view.dart';
 import 'package:logitracker/view/first_view.dart';
+import 'package:logitracker/view/flutter_layout_view.dart';
 import 'package:logitracker/view/palindrome_number.dart';
 import 'package:logitracker/view/simple_interest.dart';
 
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
         '/add': (context) => const AddView(),
         '/circle': (context) => const CircleView(),
         '/interest': (context) => const SimpleInterest(),
+        '/layout': (context) => const FlutterLayoutView(),
       },
     );
   }

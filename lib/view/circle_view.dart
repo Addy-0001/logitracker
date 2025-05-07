@@ -44,7 +44,19 @@ class _CircleViewState extends State<CircleView> {
             child: Text("Calculate"),
           ),
 
-          Text("Result : $result"),
+          Container(
+            color: Colors.blue,
+            width: double.infinity,
+            child: Text(
+              "Result : $result",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );

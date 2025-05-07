@@ -31,6 +31,10 @@ class _FirstViewState extends State<FirstView> {
             onPressed: () => Navigator.pushNamed(context, '/palindrome'),
             child: const Text("Palindrome Number"),
           ),
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/layout'),
+            child: const Text("Layout"),
+          ),
         ],
       ),
     );
