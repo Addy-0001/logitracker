@@ -213,9 +213,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // Handle registration
                       final name = _nameController.text;
                       final email = _emailController.text;
-                      final password = _passwordController.text;
-                      final confirmPassword = _confirmPasswordController.text;
-
                       // Add your registration logic here
                       print('Registration attempt with: $name, $email');
                     },
