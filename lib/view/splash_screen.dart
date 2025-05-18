@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:logitracker/view/login_screen.dart';
 import 'dart:async';
 
+// splash screen 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
