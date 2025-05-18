@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/view/add_view.dart';
-import 'package:logitracker/view/circle_view.dart';
-import 'package:logitracker/view/first_view.dart';
-import 'package:logitracker/view/flutter_layout_view.dart';
-import 'package:logitracker/view/palindrome_number.dart';
-import 'package:logitracker/view/simple_interest.dart';
+import 'package:logitracker/view/login_screen.dart';
+import 'package:logitracker/view/register_screen.dart';
+
+import 'package:logitracker/view/splash_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -15,12 +13,9 @@ class App extends StatelessWidget {
       title: "My First Assignment",
       initialRoute: '/',
       routes: {
-        '/': (context) => const FirstView(),
-        '/palindrome': (context) => const PalindromeNumber(),
-        '/add': (context) => const AddView(),
-        '/circle': (context) => const CircleView(),
-        '/interest': (context) => const SimpleInterest(),
-        '/layout': (context) => const FlutterLayoutView(),
+        '/': (context) => const SplashScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
       },
     );
   }
