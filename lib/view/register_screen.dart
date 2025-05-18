@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// register screen
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
