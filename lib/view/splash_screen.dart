@@ -3,6 +3,8 @@ import 'package:logitracker/view/login_screen.dart';
 import 'dart:async';
 // splash screen page
 
+// splash screen 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
