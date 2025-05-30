@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logitracker/themes/app_theme.dart';
 import 'package:logitracker/view/login_screen.dart';
 import 'package:logitracker/view/register_screen.dart';
 
@@ -10,6 +11,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: getApplicationTheme(),
       title: "My First Assignment",
       initialRoute: '/',
       routes: {

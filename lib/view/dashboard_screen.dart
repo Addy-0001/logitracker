@@ -14,7 +14,6 @@ class DashboardScreen extends StatelessWidget {
           'Dashboard',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFF8B1E1E),
         elevation: 0,
         actions: [],
       ),

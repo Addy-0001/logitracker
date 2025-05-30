@@ -81,19 +81,14 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
+
               // Header
-              const Text(
-                'Access Account',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+              const Text('Access Account'),
               const SizedBox(height: 8),
-              const Text(
+              Text(
+                style: Theme.of(context).textTheme.bodySmall,
                 'Log in to manage your deliveries.',
-                style: TextStyle(fontSize: 16, color: Colors.black87),
+                // style: TextStyle(fontSize: 16, color: Colors.black87),
               ),
               const SizedBox(height: 40),
 
@@ -110,12 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Your username',
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle: Theme.of(context).textTheme.headlineSmall,
                     prefixIcon: Icon(Icons.email_outlined, color: Colors.grey),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 16),
+                    contentPadding: EdgeInsets.symmetric(vertical: 2),
                   ),
                   onChanged: (_) {
                     if (_errorMessage != null) {
@@ -143,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
                     hintText: 'Enter your password',
-                    hintStyle: const TextStyle(color: Colors.grey),
+                    hintStyle: Theme.of(context).textTheme.headlineSmall,
                     prefixIcon: const Icon(
                       Icons.lock_outline,
                       color: Colors.grey,
@@ -162,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 2),
                   ),
                   onChanged: (_) {
                     if (_errorMessage != null) {
