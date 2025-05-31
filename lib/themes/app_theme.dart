@@ -14,8 +14,9 @@ ThemeData getApplicationTheme() {
   return ThemeData(
     useMaterial3: true,
     appBarTheme: AppBarTheme(
+      
       backgroundColor: primaryColor,
-      elevation: 5,
+      elevation: 10,
       titleTextStyle: TextStyle(fontSize: largeFontSize, fontWeight: bold),
     ),
 
@@ -59,7 +60,7 @@ ThemeData getApplicationTheme() {
       bodyMedium: const TextStyle(
         fontSize: mediumFontSize,
         fontWeight: normal,
-        fontFamily: "IBM Plex Sans Regular",
+        fontFamily: "IBM Plex Sans Bold",
       ),
       labelMedium: const TextStyle(
         fontSize: mediumFontSize,
