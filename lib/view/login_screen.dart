@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dashboard_screen.dart';
+import 'package:logitracker/view/home_view.dart';
 
 // login Screen
 
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _isLoading = false;
         });
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+          MaterialPageRoute(builder: (context) => const HomeView()),
         );
       }
     } else {

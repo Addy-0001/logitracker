@@ -10,11 +10,10 @@ class JobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Row(
-        spacing: 60,
         children: [
           Column(
             children: [
-              Text(style: Theme.of(context).textTheme.bodySmall, job.priority),
+              Text(style: Theme.of(context).textTheme.bodyMedium, job.priority),
               Text(
                 style: Theme.of(context).textTheme.bodySmall,
                 "${job.startTime} - ${job.endTime}",
@@ -22,6 +21,8 @@ class JobCard extends StatelessWidget {
               Text(style: Theme.of(context).textTheme.bodySmall, job.recipient),
             ],
           ),
+
+          Spacer(),
 
           ClipRRect(
             borderRadius: BorderRadius.circular(8),

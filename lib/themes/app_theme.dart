@@ -14,9 +14,9 @@ ThemeData getApplicationTheme() {
   return ThemeData(
     useMaterial3: true,
     appBarTheme: AppBarTheme(
-      
       backgroundColor: primaryColor,
       elevation: 10,
+      toolbarHeight: 125,
       titleTextStyle: TextStyle(fontSize: largeFontSize, fontWeight: bold),
     ),
 

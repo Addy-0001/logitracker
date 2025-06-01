@@ -54,36 +54,33 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: const Text('Dashboard'), actions: []),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Text(
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    "Ongoing Delivery",
-                  ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  "Ongoing Delivery",
                 ),
+              ),
 
-                JobCard(job: ongoingJob),
+              JobCard(job: ongoingJob),
 
-                Center(
-                  child: Text(
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    "Upcoming Deliveries",
-                  ),
+              Center(
+                child: Text(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  "Upcoming Deliveries",
                 ),
+              ),
 
-                for (int i = 0; i < otherJobs.length; i++)
-                  JobCard(job: otherJobs[i]),
-              ],
-            ),
+              for (int i = 0; i < otherJobs.length; i++)
+                JobCard(job: otherJobs[i]),
+            ],
           ),
         ),
       ),
