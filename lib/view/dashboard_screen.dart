@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/common/job_card.dart';
+import 'package:logitracker/core/common/card/job_card.dart';
 import 'package:logitracker/model/job_model.dart';
 
 // dashboard screen

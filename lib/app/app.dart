@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/themes/app_theme.dart';
+import 'package:logitracker/app/theme/app_theme.dart';
 import 'package:logitracker/view/splash_screen.dart';
 
 class App extends StatelessWidget {
