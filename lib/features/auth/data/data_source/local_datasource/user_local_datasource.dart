@@ -1,50 +1,52 @@
-import 'dart:io';
-
-import 'package:logitracker/core/network/hive_service.dart';
-import 'package:logitracker/features/auth/data/data_source/user_datasource.dart';
-import 'package:logitracker/features/auth/data/model/user_hive_model.dart';
 import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
+import '../../../../../app/constant/hive_service.dart';
+import '../../model/user_hive_model.dart';
 
-class UserLocalDatasource implements IUserDataSource {
-  final HiveService _hiveService;
-
-  UserLocalDatasource({required HiveService hiveService})
-    : _hiveService = hiveService;
-
-  @override
-  Future<String> loginUser(String username, String password) async {
-    try {
-      final userData = await _hiveService.login(username, password);
-      if (userData != null && userData.password == password) {
-        return "Login successful";
-      } else {
-        throw Exception("Invalid username or password");
-      }
-    } catch (e) {
-      throw Exception("Login failed: $e");
-    }
+class UserLocalDataSource {
+  Future<void> saveUser(UserEntity user) async {
+    final box = HiveService.getUserBox();
+    await box.put(
+      user.email,
+      UserHiveModel(
+        userId: user.userId,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        company: user.company,
+        phone: user.phone,
+        position: user.position,
+        avatar: user.avatar,
+        industry: user.industry,
+        size: user.size,
+        website: user.website,
+        address: user.address,
+        preferences: user.preferences,
+        role: user.role,
+      ),
+    );
   }
 
-  @override
-  Future<void> registerUser(UserEntity user) async {
-    try {
-      // Convert UserEntity to Hive model if necessary
-      final userHiveModel = UserHiveModel.fromEntity(user);
-      await _hiveService.register(userHiveModel);
-    } catch (e) {
-      throw Exception("Registration failed: $e");
-    }
-  }
-
-  @override
-  Future<String> uploadProfilePicture(File file) {
-    // TODO: implement uploadProfilePicture
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<UserEntity> getCurrentUser() async {
-    // TODO: implement uploadProfilePicture
-    throw UnimplementedError();
+  Future<UserEntity?> getUser(String email) async {
+    final box = HiveService.getUserBox();
+    final userHive = await box.get(email);
+    if (userHive == null) return null;
+    return UserEntity(
+      userId: userHive.userId,
+      firstName: userHive.firstName,
+      lastName: userHive.lastName,
+      email: userHive.email,
+      password: userHive.password,
+      company: userHive.company,
+      phone: userHive.phone,
+      position: userHive.position,
+      avatar: userHive.avatar,
+      industry: userHive.industry,
+      size: userHive.size,
+      website: userHive.website,
+      address: userHive.address,
+      preferences: userHive.preferences,
+      role: userHive.role,
+    );
   }
 }

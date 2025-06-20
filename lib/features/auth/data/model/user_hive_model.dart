@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'user_hive_model.g.dart';
 
-
+@HiveType(typeId: 0)
 class UserHiveModel extends Equatable {
   @HiveField(0)
   final String? userId;
@@ -34,7 +34,7 @@ class UserHiveModel extends Equatable {
   @HiveField(13)
   final String preferences;
   @HiveField(14)
-  final String role = "driver";
+  final String role;
 
   const UserHiveModel({
     required this.userId,
@@ -51,6 +51,7 @@ class UserHiveModel extends Equatable {
     required this.website,
     required this.address,
     required this.preferences,
+    this.role = "driver",
   });
 
   const UserHiveModel.initial()
@@ -67,25 +68,25 @@ class UserHiveModel extends Equatable {
       size = "",
       website = "",
       address = "",
-      preferences = "";
+      preferences = "",
+      role = "driver";
 
   @override
-  //implement props
   List<Object?> get props => [
-    userId, 
-    firstName, 
-    lastName, 
-    email, 
-    password, 
-    company, 
-    phone, 
-    position, 
-    avatar, 
-    industry, 
-    size, 
-    website, 
+    userId,
+    firstName,
+    lastName,
+    email,
+    password,
+    company,
+    phone,
+    position,
+    avatar,
+    industry,
+    size,
+    website,
     address,
     preferences,
-    
+    role,
   ];
 }

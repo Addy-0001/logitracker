@@ -1,65 +1,62 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
-import 'package:logitracker/features/auth/domain/repository/user_repository.dart';
-import 'package:logitracker/core/error/failure.dart';
-import 'package:logitracker/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
 import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
+import '../../../../../core/error/failure.dart';
+import '../../../../domain/repository/user_repository.dart';
+import '../../data_source/local_datasource/user_local_data_source.dart';
 
-class UserLocalRepository implements IUserRepository {
-  final UserLocalDatasource _userLocalDataSource;
+class UserLocalRepository implements UserRepository {
+  final UserLocalDataSource dataSource;
 
-  UserLocalRepository({
-    required UserLocalDatasource userLocalDatasource,
-  }) : _userLocalDataSource = userLocalDatasource;
-
-  @override
-  Future<Either<Failure, UserEntity>> getCurrentUser() async {
-    // TODO: implement loginUser
-    throw UnimplementedError();
-  }
+  UserLocalRepository(this.dataSource);
 
   @override
-  Future<Either<Failure, String>> loginUser(
-    String username,
+  Future<Either<Failure, UserEntity>> login(
+    String email,
     String password,
   ) async {
-    try {
-      final result = await _userLocalDataSource.loginUser(
-        username,
-        password,
-      );
-      return Right(result);
-    } catch (e) {
-      return Left(LocalDatabaseFailure(message: "Failed to login: $e"));
+    await Future.delayed(const Duration(seconds: 1));
+    final user = await dataSource.getUser(email);
+    if (user != null && user.password == password) {
+      return Right(user);
     }
+    return Left(Failure('Invalid credentials'));
   }
 
   @override
-  Future<Either<Failure, void>> registerUser(UserEntity user) async {
-    try {
-      await _userLocalDataSource.registerUser(user);
-      return Right(null);
-    } catch (e) {
-      return Left(LocalDatabaseFailure(message: "Failed to register: $e"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> uploadProfilePicture(File file) {
-    // TODO: implement uploadProfilePicture
-    throw UnimplementedError();
-  }
-  
-  @override
-  Future<Either<Failure, String>> loginStudent(String username, String password) {
-    // TODO: implement loginStudent
-    throw UnimplementedError();
-  }
-  
-  @override
-  Future<Either<Failure, void>> registerStudent(UserEntity student) {
-    // TODO: implement registerStudent
-    throw UnimplementedError();
+  Future<Either<Failure, UserEntity>> register({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required String company,
+    required String phone,
+    required String position,
+    required String avatar,
+    required String industry,
+    required String size,
+    required String website,
+    required String address,
+    required String preferences,
+  }) async {
+    await Future.delayed(const Duration(seconds: 1));
+    final user = UserEntity(
+      userId: DateTime.now().millisecondsSinceEpoch.toString(),
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      company: company,
+      phone: phone,
+      position: position,
+      avatar: avatar,
+      industry: industry,
+      size: size,
+      website: website,
+      address: address,
+      preferences: preferences,
+      role: "driver",
+    );
+    await dataSource.saveUser(user);
+    return Right(user);
   }
 }
