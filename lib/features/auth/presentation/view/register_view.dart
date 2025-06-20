@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logitracker/app/service_locator/service_locator.dart';
 import '../view_model/register_view_model/register_event.dart';
 import '../view_model/register_view_model/register_state.dart';
 import '../view_model/register_view_model/register_view_model.dart';
@@ -51,6 +51,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (_) => getIt<RegisterViewModel>(),
       child: BlocConsumer<RegisterViewModel, RegisterState>(
@@ -61,7 +62,7 @@ class _RegisterViewState extends State<RegisterView> {
         },
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: theme.colorScheme.background,
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
@@ -70,18 +71,14 @@ class _RegisterViewState extends State<RegisterView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 40),
-                      const Text(
+                      Text(
                         'Create Account',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                        style: theme.textTheme.displayLarge,
                       ),
                       const SizedBox(height: 8),
-                      const Text(
+                      Text(
                         'Sign up to track your shipments.',
-                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                        style: theme.textTheme.bodySmall,
                       ),
                       const SizedBox(height: 40),
                       _buildTextField(
@@ -90,6 +87,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Your first name',
                         TextInputType.name,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -98,6 +96,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Your last name',
                         TextInputType.name,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -106,6 +105,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Your email address',
                         TextInputType.emailAddress,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -114,6 +114,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Create a password',
                         TextInputType.text,
                         state.errorMessage,
+                        theme,
                         obscureText: _obscurePassword,
                         toggleObscure:
                             () => setState(
@@ -127,6 +128,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Confirm your password',
                         TextInputType.text,
                         state.errorMessage,
+                        theme,
                         obscureText: _obscureConfirmPassword,
                         toggleObscure:
                             () => setState(
@@ -142,6 +144,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Company name',
                         TextInputType.text,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -150,6 +153,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Phone number',
                         TextInputType.phone,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -158,6 +162,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Position',
                         TextInputType.text,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -166,6 +171,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Avatar URL',
                         TextInputType.url,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -174,6 +180,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Industry',
                         TextInputType.text,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -182,6 +189,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Company size',
                         TextInputType.text,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -190,6 +198,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Website',
                         TextInputType.url,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -198,6 +207,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'Address',
                         TextInputType.text,
                         state.errorMessage,
+                        theme,
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
@@ -206,35 +216,31 @@ class _RegisterViewState extends State<RegisterView> {
                         'Preferences',
                         TextInputType.text,
                         state.errorMessage,
+                        theme,
                       ),
                       if (state.errorMessage != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
                             state.errorMessage!,
-                            style: TextStyle(
-                              color: Colors.red.shade700,
-                              fontSize: 14,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.error,
                             ),
                           ),
                         ),
                       const SizedBox(height: 24),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             'By signing up, you agree to our ',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black87,
-                            ),
+                            style: theme.textTheme.bodySmall,
                           ),
                           GestureDetector(
                             onTap: () {},
-                            child: const Text(
+                            child: Text(
                               'Terms & Conditions',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xFF8B1E1E),
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -299,8 +305,8 @@ class _RegisterViewState extends State<RegisterView> {
                                     }
                                   },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF8B1E1E),
-                            foregroundColor: Colors.white,
+                            backgroundColor: theme.colorScheme.primary,
+                            foregroundColor: theme.colorScheme.onPrimary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -316,12 +322,9 @@ class _RegisterViewState extends State<RegisterView> {
                                       strokeWidth: 2,
                                     ),
                                   )
-                                  : const Text(
+                                  : Text(
                                     'Sign Up',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: theme.textTheme.labelMedium,
                                   ),
                         ),
                       ),
@@ -330,27 +333,23 @@ class _RegisterViewState extends State<RegisterView> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
+                            Text(
                               'Already have an account?',
-                              style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 14,
-                              ),
+                              style: theme.textTheme.bodySmall,
                             ),
                             TextButton(
                               onPressed:
                                   () => Navigator.pushNamed(context, '/login'),
                               style: TextButton.styleFrom(
-                                foregroundColor: const Color(0xFF8B1E1E),
+                                foregroundColor: theme.colorScheme.primary,
                                 padding: const EdgeInsets.only(left: 4),
                                 minimumSize: const Size(50, 30),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: const Text(
+                              child: Text(
                                 'Log In',
-                                style: TextStyle(
+                                style: theme.textTheme.bodySmall?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 14,
                                 ),
                               ),
                             ),
@@ -374,17 +373,18 @@ class _RegisterViewState extends State<RegisterView> {
     TextEditingController controller,
     String hintText,
     TextInputType keyboardType,
-    String? errorMessage, {
+    String? errorMessage,
+    ThemeData theme, {
     bool obscureText = false,
     VoidCallback? toggleObscure,
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5),
+        color: theme.colorScheme.surfaceVariant,
         borderRadius: BorderRadius.circular(8),
         border:
             errorMessage != null
-                ? Border.all(color: Colors.red.shade300, width: 1)
+                ? Border.all(color: theme.colorScheme.error, width: 1)
                 : null,
       ),
       child: TextField(
@@ -397,14 +397,17 @@ class _RegisterViewState extends State<RegisterView> {
                 : TextCapitalization.none,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: const TextStyle(color: Colors.grey),
-          prefixIcon: const Icon(Icons.person_outline, color: Colors.grey),
+          hintStyle: theme.textTheme.headlineSmall,
+          prefixIcon: Icon(
+            Icons.person_outline,
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
           suffixIcon:
               obscureText
                   ? IconButton(
                     icon: Icon(
                       obscureText ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
                     onPressed: toggleObscure,
                   )

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logitracker/app/service_locator/service_locator.dart';
-import 'package:logitracker/features/delivery/presentation/view_model/dashboard_view_model/dashboard_event.dart';
-import 'package:logitracker/features/delivery/presentation/view_model/dashboard_view_model/dashboard_state.dart';
-import 'package:logitracker/features/delivery/presentation/view_model/dashboard_view_model/dashboard_view_model.dart';
 import '../../../../core/common/card/job_card.dart';
+import '../view_model/dashboard_view_model/dashboard_event.dart';
+import '../view_model/dashboard_view_model/dashboard_state.dart';
+import '../view_model/dashboard_view_model/dashboard_view_model.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});

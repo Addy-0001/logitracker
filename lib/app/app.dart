@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/app/theme/app_theme.dart';
 import 'package:logitracker/view/splash_screen.dart';
+import 'theme/app_theme.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -8,16 +8,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Logitracker',
       theme: getApplicationTheme(),
-      title: "My First Assignment",
-      // initialRoute: '/',
-      // routes: {
-      //   '/': (context) => const SplashScreen(),
-      //   '/login': (context) => const LoginScreen(),
-      //   '/register': (context) => const RegisterScreen(),
-      // },
-      home: SplashScreen(),
-      debugShowCheckedModeBanner: false,
+      home: SplashScreen(), // Placeholder
     );
   }
 }

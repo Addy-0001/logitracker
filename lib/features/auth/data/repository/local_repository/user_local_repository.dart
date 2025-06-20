@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:logitracker/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
 import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
+import 'package:logitracker/features/auth/domain/repository/user_repository.dart';
 import '../../../../../core/error/failure.dart';
-import '../../../../domain/repository/user_repository.dart';
-import '../../data_source/local_datasource/user_local_data_source.dart';
 
 class UserLocalRepository implements UserRepository {
   final UserLocalDataSource dataSource;

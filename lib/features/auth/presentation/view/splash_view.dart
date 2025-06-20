@@ -47,6 +47,7 @@ class _SplashViewState extends State<SplashView>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: AnimatedBuilder(
@@ -57,7 +58,7 @@ class _SplashViewState extends State<SplashView>
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.white, const Color(0xFFF5F5F5)],
+                colors: [Colors.white, theme.colorScheme.surfaceVariant],
               ),
             ),
             child: Center(
@@ -76,21 +77,18 @@ class _SplashViewState extends State<SplashView>
                             height: 200,
                           ),
                           const SizedBox(height: 20),
-                          const Text(
+                          Text(
                             'LOGITRACKER',
-                            style: TextStyle(
-                              color: Color(0xFF8B1E1E),
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
+                            style: theme.textTheme.displayLarge?.copyWith(
+                              color: theme.colorScheme.primary,
                               letterSpacing: 2,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
+                          Text(
                             'YOUR LOGISTICS PARTNER',
-                            style: TextStyle(
-                              color: Color(0xFF333333),
-                              fontSize: 14,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurface,
                               letterSpacing: 1.2,
                             ),
                           ),
@@ -106,9 +104,9 @@ class _SplashViewState extends State<SplashView>
                         curve: const Interval(0.6, 1.0, curve: Curves.easeIn),
                       ),
                     ),
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        Color(0xFF8B1E1E),
+                        theme.colorScheme.primary,
                       ),
                     ),
                   ),

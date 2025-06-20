@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logitracker/app/service_locator/service_locator.dart';
 import '../view_model/login_view_model/login_event.dart';
 import '../view_model/login_view_model/login_state.dart';
 import '../view_model/login_view_model/login_view_model.dart';
-import 'home_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -26,6 +26,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (_) => getIt<LoginViewModel>(),
       child: BlocConsumer<LoginViewModel, LoginState>(
@@ -36,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
         },
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: theme.colorScheme.background,
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -44,21 +45,21 @@ class _LoginViewState extends State<LoginView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 40),
-                    const Text('Access Account'),
+                    Text('Access Account', style: theme.textTheme.displayLarge),
                     const SizedBox(height: 8),
                     Text(
                       'Log in to manage your deliveries.',
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: theme.textTheme.bodySmall,
                     ),
                     const SizedBox(height: 40),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF5F5F5),
+                        color: theme.colorScheme.surfaceVariant,
                         borderRadius: BorderRadius.circular(8),
                         border:
                             state.errorMessage != null
                                 ? Border.all(
-                                  color: Colors.red.shade300,
+                                  color: theme.colorScheme.error,
                                   width: 1,
                                 )
                                 : null,
@@ -68,14 +69,14 @@ class _LoginViewState extends State<LoginView> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: 'Your email',
-                          hintStyle: Theme.of(context).textTheme.headlineSmall,
-                          prefixIcon: const Icon(
+                          hintStyle: theme.textTheme.headlineSmall,
+                          prefixIcon: Icon(
                             Icons.email_outlined,
-                            color: Colors.grey,
+                            color: theme.colorScheme.onSurfaceVariant,
                           ),
                           border: InputBorder.none,
                           contentPadding: const EdgeInsets.symmetric(
-                            vertical: 2,
+                            vertical: 16,
                           ),
                         ),
                         onChanged: (_) {
@@ -90,12 +91,12 @@ class _LoginViewState extends State<LoginView> {
                     const SizedBox(height: 16),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF5F5F5),
+                        color: theme.colorScheme.surfaceVariant,
                         borderRadius: BorderRadius.circular(8),
                         border:
                             state.errorMessage != null
                                 ? Border.all(
-                                  color: Colors.red.shade300,
+                                  color: theme.colorScheme.error,
                                   width: 1,
                                 )
                                 : null,
@@ -105,17 +106,17 @@ class _LoginViewState extends State<LoginView> {
                         obscureText: _obscurePassword,
                         decoration: InputDecoration(
                           hintText: 'Enter your password',
-                          hintStyle: Theme.of(context).textTheme.headlineSmall,
-                          prefixIcon: const Icon(
+                          hintStyle: theme.textTheme.headlineSmall,
+                          prefixIcon: Icon(
                             Icons.lock_outline,
-                            color: Colors.grey,
+                            color: theme.colorScheme.onSurfaceVariant,
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscurePassword
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: Colors.grey,
+                              color: theme.colorScheme.onSurfaceVariant,
                             ),
                             onPressed:
                                 () => setState(
@@ -124,7 +125,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           border: InputBorder.none,
                           contentPadding: const EdgeInsets.symmetric(
-                            vertical: 2,
+                            vertical: 16,
                           ),
                         ),
                         onChanged: (_) {
@@ -148,9 +149,8 @@ class _LoginViewState extends State<LoginView> {
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
                           state.errorMessage!,
-                          style: TextStyle(
-                            color: Colors.red.shade700,
-                            fontSize: 14,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.error,
                           ),
                         ),
                       ),
@@ -159,14 +159,14 @@ class _LoginViewState extends State<LoginView> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                          foregroundColor: const Color(0xFF8B1E1E),
+                          foregroundColor: theme.colorScheme.primary,
                           padding: EdgeInsets.zero,
                           minimumSize: const Size(50, 30),
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
-                        child: const Text(
+                        child: Text(
                           'Forget your password?',
-                          style: TextStyle(fontSize: 14),
+                          style: theme.textTheme.bodySmall,
                         ),
                       ),
                     ),
@@ -185,15 +185,14 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                 ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF8B1E1E),
-                          foregroundColor: Colors.white,
+                          backgroundColor: theme.colorScheme.primary,
+                          foregroundColor: theme.colorScheme.onPrimary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                           elevation: 0,
-                          disabledBackgroundColor: const Color(
-                            0xFF8B1E1E,
-                          ).withOpacity(0.7),
+                          disabledBackgroundColor: theme.colorScheme.primary
+                              .withOpacity(0.7),
                         ),
                         child:
                             state.isLoading
@@ -205,12 +204,9 @@ class _LoginViewState extends State<LoginView> {
                                     strokeWidth: 2,
                                   ),
                                 )
-                                : const Text(
+                                : Text(
                                   'Log In',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: theme.textTheme.labelMedium,
                                 ),
                       ),
                     ),
@@ -219,27 +215,23 @@ class _LoginViewState extends State<LoginView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             'Need to create an account?',
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 14,
-                            ),
+                            style: theme.textTheme.bodySmall,
                           ),
                           TextButton(
                             onPressed:
                                 () => Navigator.pushNamed(context, '/register'),
                             style: TextButton.styleFrom(
-                              foregroundColor: const Color(0xFF8B1E1E),
+                              foregroundColor: theme.colorScheme.primary,
                               padding: const EdgeInsets.only(left: 4),
                               minimumSize: const Size(50, 30),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: const Text(
+                            child: Text(
                               'Sign Up',
-                              style: TextStyle(
+                              style: theme.textTheme.bodySmall?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 14,
                               ),
                             ),
                           ),

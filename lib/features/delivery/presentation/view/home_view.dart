@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/features/delivery/presentation/view_model/dashboard_view_model/dashboard_state.dart';
-import 'package:logitracker/view/assigned_delivery_screen.dart';
-import 'package:logitracker/view/dashboard_screen.dart';
-import 'package:logitracker/view/map_screen.dart';
+import 'assigned_delivery_view.dart';
+import 'dashboard_view.dart';
+import 'map_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -13,14 +12,14 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final List<Widget> pageList = [
-    DashboardView(),
-    AssignedDeliveryScreen(),
-    MapScreen(),
+    const DashboardView(),
+    const AssignedDeliveryView(),
+    const MapView(),
   ];
 
   int selectedIndex = 0;
 
-  void setSelectedIndex(index) {
+  void setSelectedIndex(int index) {
     setState(() {
       selectedIndex = index;
     });
@@ -30,14 +29,17 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Logitracker"),
-
-        actions: [Icon(Icons.person_outlined, color: Colors.white, size: 40)],
-        actionsPadding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+        title: const Text("Logitracker"),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+            child: Icon(Icons.person_outlined, color: Colors.white, size: 40),
+          ),
+        ],
       ),
       body: IndexedStack(index: selectedIndex, children: pageList),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
             icon: Icon(Icons.punch_clock),
