@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/view/splash_screen.dart';
+import 'package:logitracker/features/auth/presentation/view/splash_view.dart';
 import 'theme/app_theme.dart';
 
 class App extends StatelessWidget {
@@ -10,7 +10,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Logitracker',
       theme: getApplicationTheme(),
-      home: SplashScreen(), // Placeholder
+      home: SplashView(), // Placeholder
     );
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/features/delivery/presentation/view_model/dashboard_view_model/dashboard_state.dart';
-import 'package:logitracker/view/assigned_delivery_screen.dart';
+import 'package:logitracker/features/delivery/presentation/view/assigned_delivery_view.dart';
+import 'package:logitracker/features/delivery/presentation/view/map_view.dart';
 import 'package:logitracker/view/dashboard_screen.dart';
-import 'package:logitracker/view/map_screen.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -14,8 +13,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final List<Widget> pageList = [
     DashboardView(),
-    AssignedDeliveryScreen(),
-    MapScreen(),
+    AssignedDeliveryView(),
+    MapView(),
   ];
 
   int selectedIndex = 0;
