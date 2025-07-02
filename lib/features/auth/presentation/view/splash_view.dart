@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:logitracker/app/service_locator/navigation_service.dart';
+import 'package:logitracker/app/service_locator/service_locator.dart';
 import 'dart:async';
 
 class SplashView extends StatefulWidget {
@@ -35,7 +37,7 @@ class _SplashViewState extends State<SplashView>
     );
     _animationController.forward();
     Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacementNamed('/login');
+      getIt<NavigationService>().pushReplacementNamed('/login');
     });
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logitracker/app/service_locator/navigation_service.dart';
 import 'package:logitracker/app/service_locator/service_locator.dart';
 import '../view_model/register_view_model/register_event.dart';
 import '../view_model/register_view_model/register_state.dart';
@@ -57,7 +58,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: BlocConsumer<RegisterViewModel, RegisterState>(
         listener: (context, state) {
           if (!state.isLoading && state.errorMessage == null) {
-            Navigator.of(context).pushReplacementNamed('/home');
+            getIt<NavigationService>().pushReplacementNamed('/home');
           }
         },
         builder: (context, state) {
@@ -339,7 +340,9 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                             TextButton(
                               onPressed:
-                                  () => Navigator.pushNamed(context, '/login'),
+                                  () => getIt<NavigationService>().pushNamed(
+                                    '/login',
+                                  ),
                               style: TextButton.styleFrom(
                                 foregroundColor: theme.colorScheme.primary,
                                 padding: const EdgeInsets.only(left: 4),
