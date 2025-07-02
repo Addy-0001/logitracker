@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logitracker/app/service_locator/navigation_service.dart';
 import 'package:logitracker/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
+import 'package:logitracker/features/auth/data/data_source/remote_datasource/user_remote_datasource.dart';
 import 'package:logitracker/features/auth/data/repository/local_repository/user_local_repository.dart';
 import 'package:logitracker/features/auth/domain/repository/user_repository.dart';
 import 'package:logitracker/features/auth/domain/use_case/user_login_use_case.dart';
@@ -21,17 +23,35 @@ Future<void> setupServiceLocator() async {
   // Navigation Service
   getIt.registerSingleton<NavigationService>(NavigationService());
 
+  // Dio
+  getIt.registerSingleton<Dio>(
+    Dio(
+      BaseOptions(
+        baseUrl: 'http://10.0.2.2:5000/api', // Android emulator
+        connectTimeout: const Duration(seconds: 5),
+        receiveTimeout: const Duration(seconds: 5),
+        headers: {'Content-Type': 'application/json'},
+      ),
+    ),
+  );
+
   // Shared Preferences
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerSingleton<SharedPreferences>(sharedPreferences);
 
   // Data Sources
   getIt.registerSingleton<UserLocalDataSource>(UserLocalDataSource());
+  getIt.registerSingleton<UserRemoteDataSource>(
+    UserRemoteDataSource(getIt<Dio>()),
+  );
   getIt.registerSingleton<JobLocalDataSource>(JobLocalDataSource());
 
   // Repositories
   getIt.registerSingleton<UserRepository>(
-    UserLocalRepository(getIt<UserLocalDataSource>()),
+    UserLocalRepository(
+      getIt<UserLocalDataSource>(),
+      getIt<UserRemoteDataSource>(),
+    ),
   );
   getIt.registerSingleton<JobRepository>(
     JobLocalRepository(getIt<JobLocalDataSource>()),

@@ -1,4 +1,11 @@
-abstract class RegisterEvent {}
+part of 'register_view_model.dart';
+
+abstract class RegisterEvent extends Equatable {
+  const RegisterEvent();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class RegisterSubmitted extends RegisterEvent {
   final String firstName;
@@ -14,8 +21,9 @@ class RegisterSubmitted extends RegisterEvent {
   final String website;
   final String address;
   final String preferences;
+  final String? role;
 
-  RegisterSubmitted({
+  const RegisterSubmitted({
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -29,5 +37,24 @@ class RegisterSubmitted extends RegisterEvent {
     required this.website,
     required this.address,
     required this.preferences,
+    this.role,
   });
+
+  @override
+  List<Object?> get props => [
+    firstName,
+    lastName,
+    email,
+    password,
+    company,
+    phone,
+    position,
+    avatar,
+    industry,
+    size,
+    website,
+    address,
+    preferences,
+    role,
+  ];
 }

@@ -1,62 +1,69 @@
 import 'package:dartz/dartz.dart';
+import 'package:logitracker/core/error/failure.dart';
 import 'package:logitracker/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
+import 'package:logitracker/features/auth/data/data_source/remote_datasource/user_remote_datasource.dart';
 import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
 import 'package:logitracker/features/auth/domain/repository/user_repository.dart';
-import '../../../../../core/error/failure.dart';
 
 class UserLocalRepository implements UserRepository {
-  final UserLocalDataSource dataSource;
+  final UserLocalDataSource localDataSource;
+  final UserRemoteDataSource?
+  remoteDataSource; // Nullable to handle potential null
 
-  UserLocalRepository(this.dataSource);
+  UserLocalRepository(this.localDataSource, this.remoteDataSource);
 
   @override
   Future<Either<Failure, UserEntity>> login(
     String email,
     String password,
   ) async {
-    await Future.delayed(const Duration(seconds: 1));
-    final user = await dataSource.getUser(email);
-    if (user != null && user.password == password) {
+    try {
+      if (remoteDataSource == null) {
+        throw Failure('Remote data source is not initialized');
+      }
+      final user = await remoteDataSource!.login(email, password);
+      await localDataSource.saveUser(user); // Cache user locally
       return Right(user);
+    } catch (e) {
+      final localUser = await localDataSource.getUser(email);
+      if (localUser != null && localUser.password == password) {
+        return Right(localUser); // Fallback to local cache
+      }
+      return Left(Failure('Login failed: ${e.toString()}'));
     }
-    return Left(Failure('Invalid credentials'));
   }
 
   @override
   Future<Either<Failure, UserEntity>> register({
-    required String firstName,
-    required String lastName,
     required String email,
     required String password,
-    required String company,
-    required String phone,
-    required String position,
-    required String avatar,
-    required String industry,
-    required String size,
-    required String website,
-    required String address,
-    required String preferences,
+    required String firstName,
+    required String lastName,
+    String? company,
+    String? phone,
+    String? position,
+    String? avatar,
+    String? industry,
+    String? size,
+    String? website,
+    String? address,
+    String? preferences,
+    String? role,
   }) async {
-    await Future.delayed(const Duration(seconds: 1));
-    final user = UserEntity(
-      userId: DateTime.now().millisecondsSinceEpoch.toString(),
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      company: company,
-      phone: phone,
-      position: position,
-      avatar: avatar,
-      industry: industry,
-      size: size,
-      website: website,
-      address: address,
-      preferences: preferences,
-      role: "driver",
-    );
-    await dataSource.saveUser(user);
-    return Right(user);
+    try {
+      if (remoteDataSource == null) {
+        throw Failure('Remote data source is not initialized');
+      }
+      final user = await remoteDataSource!.register(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      );
+      await localDataSource.saveUser(user); // Cache user locally
+      return Right(user);
+    } catch (e) {
+      return Left(Failure('Registration failed: ${e.toString()}'));
+    }
   }
 }
