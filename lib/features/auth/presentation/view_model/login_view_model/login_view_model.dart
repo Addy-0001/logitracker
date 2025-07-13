@@ -1,37 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:logitracker_mobile_app/core/error/failure.dart';
-import 'package:logitracker_mobile_app/features/auth/domain/entity/user_entity.dart';
-import 'package:logitracker_mobile_app/features/auth/domain/use_case/user_login_use_case.dart';
-import 'package:logitracker_mobile_app/app/service_locator/navigation_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logitracker/features/auth/domain/use_case/user_login_use_case.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
-class LoginViewModel extends ChangeNotifier {
-  final UserLoginUseCase loginUseCase;
-  final NavigationService navigationService;
-  LoginState _state = LoginInitial();
+class LoginViewModel extends Bloc<LoginEvent, LoginState> {
+  final UserLoginUseCase _userLoginUseCase;
 
-  LoginViewModel(this.loginUseCase, this.navigationService);
+  LoginViewModel(this._userLoginUseCase) : super(LoginState()) {
+    on<LoginSubmitted>(_onLoginSubmitted);
+  }
 
-  LoginState get state => _state;
+  Future<void> _onLoginSubmitted(
+    LoginSubmitted event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true, errorMessage: null));
 
-  Future<void> handleEvent(LoginEvent event) async {
-    if (event is LoginButtonPressed) {
-      _state = LoginLoading();
-      notifyListeners();
-
-      final result = await loginUseCase(event.email, event.password);
-      result.fold(
-        (failure) {
-          _state = LoginFailure(failure.message);
-          notifyListeners();
-        },
-        (user) {
-          _state = LoginSuccess(user);
-          notifyListeners();
-          navigationService.navigateTo('/dashboard');
-        },
-      );
+    try {
+      final success = await _userLoginUseCase(event.email, event.password);
+      if (success.isRight()) {
+        emit(state.copyWith(isLoading: false));
+      } else {
+        emit(state.copyWith(isLoading: false, errorMessage: 'Login failed'));
+      }
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
 }
