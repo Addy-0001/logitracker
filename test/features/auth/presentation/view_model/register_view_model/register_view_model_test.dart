@@ -1,12 +1,14 @@
+import 'package:bloc_test/bloc_test.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
 import 'package:logitracker/core/error/failure.dart';
 import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
 import 'package:logitracker/features/auth/domain/use_case/user_register_use_case.dart';
 import 'package:logitracker/features/auth/presentation/view_model/register_view_model/register_view_model.dart';
 import 'package:logitracker/features/auth/presentation/view_model/register_view_model/register_event.dart';
 import 'package:logitracker/features/auth/presentation/view_model/register_view_model/register_state.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:dartz/dartz.dart';
 
 class MockUserRegisterUseCase extends Mock implements UserRegisterUseCase {}
 
@@ -19,157 +21,155 @@ void main() {
     registerViewModel = RegisterViewModel(mockUserRegisterUseCase);
   });
 
-  group('RegisterViewModel Tests', () {
-    test(
-      'should emit [isLoading: true, isLoading: false] when registration is successful',
-      () async {
-        // Arrange: Mock the UserRegisterUseCase to return a successful result
+  group('RegisterViewModel', () {
+    const firstName = 'John';
+    const lastName = 'Doe';
+    const email = 'john.doe@example.com';
+    const password = 'password123';
+    const company = 'Company Inc';
+    const phone = '1234567890';
+    const position = 'Developer';
+    const avatar = '';
+    const industry = 'Tech';
+    const size = 'Medium';
+    const website = 'https://example.com';
+    const address = '123 Main St';
+    const preferences = 'None';
+
+    final userEntity = UserEntity(
+      userId: '1',
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      company: company,
+      phone: phone,
+      position: position,
+      avatar: avatar,
+      industry: industry,
+      size: size,
+      website: website,
+      address: address,
+      preferences: preferences,
+      role: 'driver',
+    );
+
+    blocTest<RegisterViewModel, RegisterState>(
+      'emits [isLoading: true, isLoading: false] when register succeeds',
+      build: () {
         when(
           () => mockUserRegisterUseCase(
-            firstName: any(named: 'firstName'),
-            lastName: any(named: 'lastName'),
-            email: any(named: 'email'),
-            password: any(named: 'password'),
-            company: any(named: 'company'),
-            phone: any(named: 'phone'),
-            position: any(named: 'position'),
-            avatar: any(named: 'avatar'),
-            industry: any(named: 'industry'),
-            size: any(named: 'size'),
-            website: any(named: 'website'),
-            address: any(named: 'address'),
-            preferences: any(named: 'preferences'),
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            company: company,
+            phone: phone,
+            position: position,
+            avatar: avatar,
+            industry: industry,
+            size: size,
+            website: website,
+            address: address,
+            preferences: preferences,
           ),
-        ).thenAnswer(
-          (_) async => Right(
-            UserEntity(
-              userId: '123',
-              firstName: 'John',
-              lastName: 'Doe',
-              email: 'john@example.com',
-              company: 'Company',
-              phone: '1234567890',
-              position: 'Manager',
-              avatar: 'avatar.png',
-              industry: 'Tech',
-              size: 'Medium',
-              website: 'example.com',
-              address: '123 Street',
-              preferences: 'None',
-              password: 'password123',
-            ),
-          ),
-        ); // Simulate successful registration
+        ).thenAnswer((_) async => Right(userEntity));
 
-        // Act: Trigger the RegisterSubmitted event
-        registerViewModel.add(
-          RegisterSubmitted(
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'john@example.com',
-            password: 'password123',
-            company: 'Company',
-            phone: '1234567890',
-            position: 'Manager',
-            avatar: 'avatar.png',
-            industry: 'Tech',
-            size: 'Medium',
-            website: 'example.com',
-            address: '123 Street',
-            preferences: 'None',
+        return registerViewModel;
+      },
+      act:
+          (bloc) => bloc.add(
+            RegisterSubmitted(
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              password: password,
+              company: company,
+              phone: phone,
+              position: position,
+              avatar: avatar,
+              industry: industry,
+              size: size,
+              website: website,
+              address: address,
+              preferences: preferences,
+            ),
           ),
-        );
-
-        // Assert: Check if the state emits the correct states
-        expectLater(
-          registerViewModel.stream,
-          emitsInOrder([
-            isA<RegisterState>().having(
-              (state) => state.isLoading,
-              'isLoading',
-              true,
-            ),
-            isA<RegisterState>().having(
-              (state) => state.isLoading,
-              'isLoading',
-              false,
-            ),
-            isA<RegisterState>().having(
-              (state) => state.errorMessage,
-              'errorMessage',
-              isNull,
-            ),
-          ]),
-        );
+      expect:
+          () => [
+            RegisterState(isLoading: true, errorMessage: null),
+            RegisterState(isLoading: false, errorMessage: null),
+          ],
+      verify: (_) {
+        verify(
+          () => mockUserRegisterUseCase(
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            company: company,
+            phone: phone,
+            position: position,
+            avatar: avatar,
+            industry: industry,
+            size: size,
+            website: website,
+            address: address,
+            preferences: preferences,
+          ),
+        ).called(1);
       },
     );
 
-    test(
-      'should emit [isLoading: true, isLoading: false, errorMessage] when registration fails',
-      () async {
-        // Arrange: Mock the UserRegisterUseCase to return a failure result
+    blocTest<RegisterViewModel, RegisterState>(
+      'emits [isLoading: true, isLoading: false with errorMessage] when register fails',
+      build: () {
         when(
           () => mockUserRegisterUseCase(
-            firstName: any(named: 'firstName'),
-            lastName: any(named: 'lastName'),
-            email: any(named: 'email'),
-            password: any(named: 'password'),
-            company: any(named: 'company'),
-            phone: any(named: 'phone'),
-            position: any(named: 'position'),
-            avatar: any(named: 'avatar'),
-            industry: any(named: 'industry'),
-            size: any(named: 'size'),
-            website: any(named: 'website'),
-            address: any(named: 'address'),
-            preferences: any(named: 'preferences'),
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            company: company,
+            phone: phone,
+            position: position,
+            avatar: avatar,
+            industry: industry,
+            size: size,
+            website: website,
+            address: address,
+            preferences: preferences,
           ),
-        ).thenAnswer(
-          (_) async => Left(Failure('Registration failed')),
-        ); // Simulate failure
+        ).thenAnswer((_) async => Left(Failure('Registration failed')));
 
-        // Act: Trigger the RegisterSubmitted event
-        registerViewModel.add(
-          RegisterSubmitted(
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'john@example.com',
-            password: 'password123',
-            company: 'Company',
-            phone: '1234567890',
-            position: 'Manager',
-            avatar: 'avatar.png',
-            industry: 'Tech',
-            size: 'Medium',
-            website: 'example.com',
-            address: '123 Street',
-            preferences: 'None',
-          ),
-        );
-
-        // Assert: Check if the state emits the correct states
-        expectLater(
-          registerViewModel.stream,
-          emitsInOrder([
-            isA<RegisterState>().having(
-              (state) => state.isLoading,
-              'isLoading',
-              true,
-            ),
-            isA<RegisterState>().having(
-              (state) => state.isLoading,
-              'isLoading',
-              false,
-            ),
-            isA<RegisterState>().having(
-              (state) => state.errorMessage,
-              'errorMessage',
-              'Registration failed',
-            ),
-          ]),
-        );
+        return registerViewModel;
       },
+      act:
+          (bloc) => bloc.add(
+            RegisterSubmitted(
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              password: password,
+              company: company,
+              phone: phone,
+              position: position,
+              avatar: avatar,
+              industry: industry,
+              size: size,
+              website: website,
+              address: address,
+              preferences: preferences,
+            ),
+          ),
+      expect:
+          () => [
+            RegisterState(isLoading: true, errorMessage: null),
+            RegisterState(
+              isLoading: false,
+              errorMessage: 'Registration failed',
+            ),
+          ],
     );
   });
 }
-// update tests. 
