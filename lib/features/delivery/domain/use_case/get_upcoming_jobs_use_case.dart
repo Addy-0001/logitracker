@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/error/failure.dart';
-import '../entity/job_entity.dart';
-import '../repository/job_repository.dart';
+import 'package:logitracker_mobile_app/core/error/failure.dart';
+import 'package:logitracker_mobile_app/features/delivery/domain/entity/job_entity.dart';
+import 'package:logitracker_mobile_app/features/delivery/domain/repository/job_repository.dart';
 
 class GetUpcomingJobsUseCase {
   final JobRepository repository;
 
   GetUpcomingJobsUseCase(this.repository);
 
-  Future<Either<Failure, List<JobEntity>>> call() {
-    return repository.getUpcomingJobs();
+  Future<Either<Failure, List<JobEntity>>> call() async {
+    return await repository.getUpcomingJobs();
   }
 }

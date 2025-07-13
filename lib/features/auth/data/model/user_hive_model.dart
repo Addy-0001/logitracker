@@ -1,92 +1,71 @@
-import 'package:equatable/equatable.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
+import 'package:hive/hive.dart';
+import 'package:logitracker_mobile_app/features/auth/domain/entity/user_entity.dart';
+import 'package:logitracker_mobile_app/app/constant/hive_table_constant.dart';
 part 'user_hive_model.g.dart';
 
-@HiveType(typeId: 0)
-class UserHiveModel extends Equatable {
+@HiveType(typeId: HiveTableConstant.userTypeId)
+class UserHiveModel {
   @HiveField(0)
-  final String? userId;
+  final String id;
+
   @HiveField(1)
   final String firstName;
+
   @HiveField(2)
   final String lastName;
+
   @HiveField(3)
   final String email;
+
   @HiveField(4)
-  final String password;
-  @HiveField(5)
   final String company;
-  @HiveField(6)
-  final String phone;
-  @HiveField(7)
-  final String position;
-  @HiveField(8)
-  final String avatar;
-  @HiveField(9)
-  final String industry;
-  @HiveField(10)
-  final String size;
-  @HiveField(11)
-  final String website;
-  @HiveField(12)
-  final String address;
-  @HiveField(13)
-  final String preferences;
-  @HiveField(14)
+
+  @HiveField(5)
   final String role;
 
-  const UserHiveModel({
-    required this.userId,
+  @HiveField(6)
+  final String? token;
+
+  UserHiveModel({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.password,
     required this.company,
-    required this.phone,
-    required this.position,
-    required this.avatar,
-    required this.industry,
-    required this.size,
-    required this.website,
-    required this.address,
-    required this.preferences,
-    this.role = "driver",
+    required this.role,
+    this.token,
   });
 
-  const UserHiveModel.initial()
-    : userId = "",
-      firstName = "",
-      lastName = "",
-      email = "",
-      password = "",
-      company = "",
-      phone = "",
-      position = "",
-      avatar = "",
-      industry = "",
-      size = "",
-      website = "",
-      address = "",
-      preferences = "",
-      role = "driver";
+  factory UserHiveModel.fromJson(Map<String, dynamic> json) {
+    return UserHiveModel(
+      id: json['_id'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      email: json['email'],
+      company: json['company'],
+      role: json['role'],
+      token: json['token'],
+    );
+  }
 
-  @override
-  List<Object?> get props => [
-    userId,
-    firstName,
-    lastName,
-    email,
-    password,
-    company,
-    phone,
-    position,
-    avatar,
-    industry,
-    size,
-    website,
-    address,
-    preferences,
-    role,
-  ];
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'company': company,
+      'role': role,
+      'token': token,
+    };
+  }
+
+  UserEntity toEntity() => UserEntity(
+    id: id,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    company: company,
+    role: role,
+  );
 }

@@ -1,13 +1,19 @@
-class RegisterState {
-  final bool isLoading;
-  final String? errorMessage;
+import 'package:logitracker_mobile_app/features/auth/domain/entity/user_entity.dart';
 
-  RegisterState({this.isLoading = false, this.errorMessage});
+abstract class RegisterState {}
 
-  RegisterState copyWith({bool? isLoading, String? errorMessage}) {
-    return RegisterState(
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
-    );
-  }
+class RegisterInitial extends RegisterState {}
+
+class RegisterLoading extends RegisterState {}
+
+class RegisterSuccess extends RegisterState {
+  final UserEntity user;
+
+  RegisterSuccess(this.user);
+}
+
+class RegisterFailure extends RegisterState {
+  final String error;
+
+  RegisterFailure(this.error);
 }

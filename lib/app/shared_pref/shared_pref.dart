@@ -1,13 +1,20 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPrefService {
-  static SharedPreferences? _prefs;
+class SharedPref {
+  static Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  static Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+  Future<void> setString(String key, String value) async {
+    final prefs = await _prefs;
+    await prefs.setString(key, value);
   }
 
-  static String? getString(String key) => _prefs?.getString(key);
-  static Future<bool> setString(String key, String value) =>
-      _prefs?.setString(key, value) ?? Future.value(false);
+  Future<String?> getString(String key) async {
+    final prefs = await _prefs;
+    return prefs.getString(key);
+  }
+
+  Future<void> remove(String key) async {
+    final prefs = await _prefs;
+    await prefs.remove(key);
+  }
 }

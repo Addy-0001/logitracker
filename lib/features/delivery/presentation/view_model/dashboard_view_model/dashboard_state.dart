@@ -1,29 +1,17 @@
-import 'package:logitracker/features/delivery/domain/entity/job_entity.dart';
+abstract class DashboardState {}
 
-class DashboardState {
-  final bool isLoading;
-  final String? errorMessage;
-  final JobEntity? ongoingJob;
-  final List<JobEntity> upcomingJobs;
+class DashboardInitial extends DashboardState {}
 
-  DashboardState({
-    this.isLoading = false,
-    this.errorMessage,
-    this.ongoingJob,
-    this.upcomingJobs = const [],
-  });
+class DashboardLoading extends DashboardState {}
 
-  DashboardState copyWith({
-    bool? isLoading,
-    String? errorMessage,
-    JobEntity? ongoingJob,
-    List<JobEntity>? upcomingJobs,
-  }) {
-    return DashboardState(
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
-      ongoingJob: ongoingJob ?? this.ongoingJob,
-      upcomingJobs: upcomingJobs ?? this.upcomingJobs,
-    );
-  }
+class DashboardLoaded extends DashboardState {
+  final List<dynamic> data;
+
+  DashboardLoaded(this.data);
+}
+
+class DashboardError extends DashboardState {
+  final String message;
+
+  DashboardError(this.message);
 }

@@ -1,6 +1,7 @@
 class HiveTableConstant {
-  HiveTableConstant._();
+  static const String userBox = 'user_box';
+  static const int userTypeId = 0;
 
-  static const int userTableId = 0;
-  static const String userBox = 'userBox';
+  static const String jobBox = 'job_box';
+  static const int jobTypeId = 1;
 }

@@ -1,39 +1,37 @@
-import 'package:equatable/equatable.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
+import 'package:hive/hive.dart';
+import 'package:logitracker_mobile_app/features/delivery/domain/entity/job_entity.dart';
+import 'package:logitracker_mobile_app/app/constant/hive_table_constant.dart';
 part 'job_hive_model.g.dart';
 
-@HiveType(typeId: 1)
-class JobHiveModel extends Equatable {
+@HiveType(typeId: HiveTableConstant.jobTypeId)
+class JobHiveModel {
   @HiveField(0)
-  final String jobId;
+  final String id;
+
   @HiveField(1)
-  final String priority;
+  final String? customerName;
+
   @HiveField(2)
-  final String startTime;
-  @HiveField(3)
-  final String endTime;
-  @HiveField(4)
-  final String recipient;
-  @HiveField(5)
-  final String imageUrl;
+  final String? status;
 
-  const JobHiveModel({
-    required this.jobId,
-    required this.priority,
-    required this.startTime,
-    required this.endTime,
-    required this.recipient,
-    required this.imageUrl,
-  });
+  JobHiveModel({required this.id, this.customerName, this.status});
 
-  @override
-  List<Object?> get props => [
-    jobId,
-    priority,
-    startTime,
-    endTime,
-    recipient,
-    imageUrl,
-  ];
+  factory JobHiveModel.fromJson(Map<String, dynamic> json) {
+    return JobHiveModel(
+      id: json['_id'],
+      customerName: json['customer']?['name'],
+      status: json['status'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'customer': {'name': customerName},
+      'status': status,
+    };
+  }
+
+  JobEntity toEntity() =>
+      JobEntity(id: id, customerName: customerName, status: status);
 }
