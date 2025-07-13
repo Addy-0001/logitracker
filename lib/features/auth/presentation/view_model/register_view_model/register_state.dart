@@ -1,19 +1,19 @@
-import 'package:logitracker_mobile_app/features/auth/domain/entity/user_entity.dart';
 
-abstract class RegisterState {}
+import 'package:equatable/equatable.dart';
 
-class RegisterInitial extends RegisterState {}
+class RegisterState extends Equatable {
+  final bool isLoading;
+  final String? errorMessage;
 
-class RegisterLoading extends RegisterState {}
+  const RegisterState({this.isLoading = false, this.errorMessage});
 
-class RegisterSuccess extends RegisterState {
-  final UserEntity user;
+  RegisterState copyWith({bool? isLoading, String? errorMessage}) {
+    return RegisterState(
+      isLoading: isLoading ?? this.isLoading,
+      errorMessage: errorMessage,
+    );
+  }
 
-  RegisterSuccess(this.user);
-}
-
-class RegisterFailure extends RegisterState {
-  final String error;
-
-  RegisterFailure(this.error);
+  @override
+  List<Object?> get props => [isLoading, errorMessage];
 }
