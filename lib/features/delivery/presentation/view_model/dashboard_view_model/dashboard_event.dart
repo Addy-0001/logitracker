@@ -1,3 +1,3 @@
 abstract class DashboardEvent {}
 
-class LoadJobsEvent extends DashboardEvent {}
+class LoadDashboard extends DashboardEvent {}

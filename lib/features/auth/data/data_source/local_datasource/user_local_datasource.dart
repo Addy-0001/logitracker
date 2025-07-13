@@ -1,52 +1,46 @@
-import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
-import '../../../../../app/constant/hive_service.dart';
-import '../../model/user_hive_model.dart';
+import 'package:hive/hive.dart';
+import 'package:logitracker_mobile_app/core/error/failure.dart';
+import 'package:logitracker_mobile_app/features/auth/data/model/user_hive_model.dart';
+import 'package:logitracker_mobile_app/app/constant/hive_table_constant.dart';
 
 class UserLocalDataSource {
-  Future<void> saveUser(UserEntity user) async {
-    final box = HiveService.getUserBox();
-    await box.put(
-      user.email,
-      UserHiveModel(
-        userId: user.userId,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
-        company: user.company,
-        phone: user.phone,
-        position: user.position,
-        avatar: user.avatar,
-        industry: user.industry,
-        size: user.size,
-        website: user.website,
-        address: user.address,
-        preferences: user.preferences,
-        role: user.role,
-      ),
-    );
+  Future<void> saveUser(UserHiveModel user) async {
+    try {
+      final box = await Hive.openBox(HiveTableConstant.userBox);
+      await box.put('current_user', user.toJson());
+    } catch (e) {
+      throw CacheFailure('Failed to save user: $e');
+    }
   }
 
-  Future<UserEntity?> getUser(String email) async {
-    final box = HiveService.getUserBox();
-    final userHive = await box.get(email);
-    if (userHive == null) return null;
-    return UserEntity(
-      userId: userHive.userId,
-      firstName: userHive.firstName,
-      lastName: userHive.lastName,
-      email: userHive.email,
-      password: userHive.password,
-      company: userHive.company,
-      phone: userHive.phone,
-      position: userHive.position,
-      avatar: userHive.avatar,
-      industry: userHive.industry,
-      size: userHive.size,
-      website: userHive.website,
-      address: userHive.address,
-      preferences: userHive.preferences,
-      role: userHive.role,
-    );
+  Future<UserHiveModel?> getUser() async {
+    try {
+      final box = await Hive.openBox(HiveTableConstant.userBox);
+      final userJson = box.get('current_user');
+      if (userJson != null) {
+        return UserHiveModel.fromJson(userJson);
+      }
+      return null;
+    } catch (e) {
+      throw CacheFailure('Failed to retrieve user: $e');
+    }
+  }
+
+  Future<String?> getToken() async {
+    try {
+      final user = await getUser();
+      return user?.token;
+    } catch (e) {
+      throw CacheFailure('Failed to retrieve token: $e');
+    }
+  }
+
+  Future<void> clearUser() async {
+    try {
+      final box = await Hive.openBox(HiveTableConstant.userBox);
+      await box.delete('current_user');
+    } catch (e) {
+      throw CacheFailure('Failed to clear user: $e');
+    }
   }
 }

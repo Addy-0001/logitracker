@@ -1,62 +1,48 @@
 import 'package:dartz/dartz.dart';
-import 'package:logitracker/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
-import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
-import 'package:logitracker/features/auth/domain/repository/user_repository.dart';
-import '../../../../../core/error/failure.dart';
+import 'package:logitracker_mobile_app/core/error/failure.dart';
+import 'package:logitracker_mobile_app/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
+import 'package:logitracker_mobile_app/features/auth/data/model/user_hive_model.dart';
 
-class UserLocalRepository implements UserRepository {
-  final UserLocalDataSource dataSource;
+class UserLocalRepository {
+  final UserLocalDataSource localDataSource;
 
-  UserLocalRepository(this.dataSource);
+  UserLocalRepository(this.localDataSource);
 
-  @override
-  Future<Either<Failure, UserEntity>> login(
-    String email,
-    String password,
-  ) async {
-    await Future.delayed(const Duration(seconds: 1));
-    final user = await dataSource.getUser(email);
-    if (user != null && user.password == password) {
+  Future<Either<Failure, UserHiveModel>> getUser() async {
+    try {
+      final user = await localDataSource.getUser();
+      if (user == null) return Left(CacheFailure('No user found'));
       return Right(user);
+    } catch (e) {
+      return Left(CacheFailure(e.toString()));
     }
-    return Left(Failure('Invalid credentials'));
   }
 
-  @override
-  Future<Either<Failure, UserEntity>> register({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String company,
-    required String phone,
-    required String position,
-    required String avatar,
-    required String industry,
-    required String size,
-    required String website,
-    required String address,
-    required String preferences,
-  }) async {
-    await Future.delayed(const Duration(seconds: 1));
-    final user = UserEntity(
-      userId: DateTime.now().millisecondsSinceEpoch.toString(),
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      company: company,
-      phone: phone,
-      position: position,
-      avatar: avatar,
-      industry: industry,
-      size: size,
-      website: website,
-      address: address,
-      preferences: preferences,
-      role: "driver",
-    );
-    await dataSource.saveUser(user);
-    return Right(user);
+  Future<Either<Failure, void>> saveUser(UserHiveModel user) async {
+    try {
+      await localDataSource.saveUser(user);
+      return Right(null);
+    } catch (e) {
+      return Left(CacheFailure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, String>> getToken() async {
+    try {
+      final token = await localDataSource.getToken();
+      if (token == null) return Left(CacheFailure('No token found'));
+      return Right(token);
+    } catch (e) {
+      return Left(CacheFailure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, void>> clearUser() async {
+    try {
+      await localDataSource.clearUser();
+      return Right(null);
+    } catch (e) {
+      return Left(CacheFailure(e.toString()));
+    }
   }
 }

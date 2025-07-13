@@ -1,4 +1,4 @@
-package com.adamya.logitracker.logitracker
+package com.logitracker.logitracker_mobile_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,122 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/app/service_locator/navigation_service.dart';
-import 'package:logitracker/app/service_locator/service_locator.dart';
-import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logitracker_mobile_app/features/auth/domain/use_case/user_get_current_use_case.dart';
+import 'package:logitracker_mobile_app/app/service_locator/navigation_service.dart';
 
 class SplashView extends StatefulWidget {
-  const SplashView({super.key});
-
   @override
-  State<SplashView> createState() => _SplashViewState();
+  _SplashViewState createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
-  late Animation<double> _scaleAnimation;
-
+class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2000),
-    );
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
-      ),
-    );
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
-      ),
-    );
-    _animationController.forward();
-    Timer(const Duration(seconds: 3), () {
-      getIt<NavigationService>().pushReplacementNamed('/login');
-    });
+    _checkAuthStatus();
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
+  Future<void> _checkAuthStatus() async {
+    await Future.delayed(Duration(seconds: 2)); // Simulate loading
+    final useCase = context.read<UserGetCurrentUseCase>();
+    final result = await useCase();
+    result.fold(
+      (failure) => context.read<NavigationService>().navigateTo('/login'),
+      (user) => context.read<NavigationService>().navigateTo('/dashboard'),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: AnimatedBuilder(
-        animation: _animationController,
-        builder: (context, child) {
-          return Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.white, theme.colorScheme.surfaceVariant],
-              ),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Opacity(
-                    opacity: _fadeAnimation.value,
-                    child: Transform.scale(
-                      scale: _scaleAnimation.value,
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/logitracker_logo.png',
-                            width: 200,
-                            height: 200,
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'LOGITRACKER',
-                            style: theme.textTheme.displayLarge?.copyWith(
-                              color: theme.colorScheme.primary,
-                              letterSpacing: 2,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'YOUR LOGISTICS PARTNER',
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: theme.colorScheme.onSurface,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 60),
-                  FadeTransition(
-                    opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
-                      CurvedAnimation(
-                        parent: _animationController,
-                        curve: const Interval(0.6, 1.0, curve: Curves.easeIn),
-                      ),
-                    ),
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        theme.colorScheme.primary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+      body: Center(
+        child: Image.asset(
+          'assets/images/logitracker_logo.png',
+          width: 200,
+          height: 200,
+        ),
       ),
     );
   }
