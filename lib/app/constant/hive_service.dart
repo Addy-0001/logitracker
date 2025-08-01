@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logitracker/features/auth/data/model/user_hive_model.dart';
-import 'package:logitracker/features/delivery/data/model/job_hive_model.dart';
+import 'package:logitracker/features/job/data/model/job_hive_model.dart';
 
 class HiveService {
   static const String userBox = 'userBox';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logitracker/features/auth/presentation/view/login_view.dart';
 import 'package:logitracker/features/auth/presentation/view/register_view.dart';
-import 'package:logitracker/features/auth/presentation/view/splash_view.dart';
-import 'package:logitracker/features/delivery/presentation/view/home_view.dart';
+import 'package:logitracker/features/job/presentation/view/splash_view.dart';
+import 'package:logitracker/features/job/presentation/view/home_view.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {

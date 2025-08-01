@@ -7,12 +7,12 @@ import 'package:logitracker/features/auth/domain/use_case/user_login_use_case.da
 import 'package:logitracker/features/auth/domain/use_case/user_register_use_case.dart';
 import 'package:logitracker/features/auth/presentation/view_model/login_view_model/login_view_model.dart';
 import 'package:logitracker/features/auth/presentation/view_model/register_view_model/register_view_model.dart';
-import 'package:logitracker/features/delivery/data/data_source/local_data_source/job_local_data_source.dart';
-import 'package:logitracker/features/delivery/data/repository/local_repository/job_local_repository.dart';
-import 'package:logitracker/features/delivery/domain/repository/job_repository.dart';
-import 'package:logitracker/features/delivery/domain/use_case/get_ongoing_job_use_case.dart';
-import 'package:logitracker/features/delivery/domain/use_case/get_upcoming_jobs_use_case.dart';
-import 'package:logitracker/features/delivery/presentation/view_model/dashboard_view_model/dashboard_view_model.dart';
+import 'package:logitracker/features/job/data/data_source/local_data_source/job_local_data_source.dart';
+import 'package:logitracker/features/job/data/repository/local_repository/job_local_repository.dart';
+import 'package:logitracker/features/job/domain/repository/job_repository.dart';
+import 'package:logitracker/features/job/domain/use_case/get_ongoing_job_use_case.dart';
+import 'package:logitracker/features/job/domain/use_case/get_upcoming_jobs_use_case.dart';
+import 'package:logitracker/features/job/presentation/view_model/dashboard_view_model/dashboard_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;

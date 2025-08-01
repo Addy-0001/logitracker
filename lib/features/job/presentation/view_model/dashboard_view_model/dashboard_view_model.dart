@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logitracker/features/delivery/domain/use_case/get_ongoing_job_use_case.dart';
-import 'package:logitracker/features/delivery/domain/use_case/get_upcoming_jobs_use_case.dart';
+import 'package:logitracker/features/job/domain/use_case/get_ongoing_job_use_case.dart';
+import 'package:logitracker/features/job/domain/use_case/get_upcoming_jobs_use_case.dart';
 import 'dashboard_event.dart';
 import 'dashboard_state.dart';
 

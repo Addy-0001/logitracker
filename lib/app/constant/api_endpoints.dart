@@ -11,15 +11,18 @@ class ApiEndpoints {
 
   static const baseUrl = '$serverAddress/api/v1/';
 
+  // AUTH API
   static const signup = 'auth/signup';
   static const login = 'auth/driver-login';
 
+  // USER SPECIFIC API
   // TODO: this one needs to append user id to send the request. The actual endpoint is user/getProfile/:id
   static const getUserProfile = 'user/getProfile';
   static const updateProfile = 'user/updateProfile';
   static const updatePassword = 'user/changePassword';
   static const uploadAvatar = 'user/uploadAvatar';
 
+  // JOB SPECIFIC API
   // TODO: this one also needs to append the user id to send the request. The actual endpoint is job/getJobForDriver/:driverId
   static const getJobs = 'job/getJobForDriver';
   // TODO: this one also needs to append the user id to send the request. The actual endpoint is job/getJobById/:jobId

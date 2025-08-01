@@ -1,4 +1,4 @@
-import 'package:logitracker/features/delivery/domain/entity/job_entity.dart';
+import 'package:logitracker/features/job/domain/entity/job_entity.dart';
 import '../../../../../app/constant/hive_service.dart';
 import '../../model/job_hive_model.dart';
 

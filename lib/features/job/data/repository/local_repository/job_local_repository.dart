@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:logitracker/features/delivery/data/data_source/local_data_source/job_local_data_source.dart';
-import 'package:logitracker/features/delivery/domain/entity/job_entity.dart';
-import 'package:logitracker/features/delivery/domain/repository/job_repository.dart';
+import 'package:logitracker/features/job/data/data_source/local_data_source/job_local_data_source.dart';
+import 'package:logitracker/features/job/domain/entity/job_entity.dart';
+import 'package:logitracker/features/job/domain/repository/job_repository.dart';
 import '../../../../../core/error/failure.dart';
 
 class JobLocalRepository implements JobRepository {
