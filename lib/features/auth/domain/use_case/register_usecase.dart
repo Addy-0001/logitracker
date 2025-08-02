@@ -12,6 +12,7 @@ class RegisterUsecase implements UsecaseWithParams<void, SignupEntity> {
   Future<Either<Exception, void>> call(SignupEntity params) async {
     try {
       await authRepository.registerUser(params);
+      return Right(null);
     } on Exception catch (e) {
       return Future.value(Left(e));
     } catch (ex) {
