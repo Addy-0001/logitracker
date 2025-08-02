@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logitracker/app/service_locator/navigation_service.dart';
 import 'package:logitracker/app/service_locator/service_locator.dart';
-import '../view_model/register_view_model/register_event.dart';
-import '../view_model/register_view_model/register_state.dart';
-import '../view_model/register_view_model/register_view_model.dart';
+import '../view_model/register_view_model/signup_event.dart';
+import '../view_model/register_view_model/signup_state.dart';
+import '../view_model/register_view_model/signup_view_model.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});

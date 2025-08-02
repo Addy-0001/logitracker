@@ -6,9 +6,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:logitracker/core/error/failure.dart';
 import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
 import 'package:logitracker/features/auth/domain/use_case/user_register_use_case.dart';
-import 'package:logitracker/features/auth/presentation/view_model/register_view_model/register_view_model.dart';
-import 'package:logitracker/features/auth/presentation/view_model/register_view_model/register_event.dart';
-import 'package:logitracker/features/auth/presentation/view_model/register_view_model/register_state.dart';
+import 'package:logitracker/features/auth/presentation/view_model/register_view_model/signup_view_model.dart';
+import 'package:logitracker/features/auth/presentation/view_model/register_view_model/signup_event.dart';
+import 'package:logitracker/features/auth/presentation/view_model/register_view_model/signup_state.dart';
 
 class MockUserRegisterUseCase extends Mock implements UserRegisterUseCase {}
 

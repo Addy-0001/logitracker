@@ -1,18 +1,16 @@
-import 'package:equatable/equatable.dart';
+part of 'login_view_model.dart';
 
-class LoginState extends Equatable {
-  final bool isLoading;
-  final String? errorMessage;
+abstract class LoginState {}
 
-  const LoginState({this.isLoading = false, this.errorMessage});
+class LoginInitial extends LoginState {}
 
-  LoginState copyWith({bool? isLoading, String? errorMessage}) {
-    return LoginState(
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
-    );
-  }
+class LoginLoading extends LoginState {}
 
-  @override
-  List<Object?> get props => [isLoading, errorMessage];
+class LoginSuccess extends LoginState {
+  LoginSuccess();
+}
+
+class LoginError extends LoginState {
+  final String message;
+  LoginError(this.message);
 }

@@ -1,8 +1,8 @@
+part of 'login_view_model.dart';
+
 abstract class LoginEvent {}
 
-class LoginSubmitted extends LoginEvent {
-  final String email;
-  final String password;
-
-  LoginSubmitted(this.email, this.password);
+class LoginRequested extends LoginEvent{
+  final LoginEntity loginModel; 
+  LoginRequested(this.loginModel); 
 }
