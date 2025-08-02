@@ -1,19 +1,16 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logitracker/features/auth/data/model/user_hive_model.dart';
-import 'package:logitracker/features/job/data/model/job_hive_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 class HiveService {
-  static const String userBox = 'userBox';
-  static const String jobBox = 'jobBox';
+  Future<void> init() async {
+    //Initialize the database
+    var directory = await getApplicationDocumentsDirectory();
+    var path = '${directory.path}logitracker.db';
 
-  static Future<void> init() async {
-    await Hive.initFlutter();
+    Hive.init(path);
+
+    //Register Adapter
     Hive.registerAdapter(UserHiveModelAdapter());
-    Hive.registerAdapter(JobHiveModelAdapter());
-    await Hive.openBox<UserHiveModel>(userBox);
-    await Hive.openBox<JobHiveModel>(jobBox);
   }
-
-  static Box<UserHiveModel> getUserBox() => Hive.box<UserHiveModel>(userBox);
-  static Box<JobHiveModel> getJobBox() => Hive.box<JobHiveModel>(jobBox);
 }

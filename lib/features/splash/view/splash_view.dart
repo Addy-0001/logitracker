@@ -26,7 +26,7 @@ class _SplashViewState extends State<SplashView> {
   processNavigation() async {
     await Future.delayed(Duration(seconds: 2));
     // TODO: Fix hive service and fix this. 
-    // HiveService().init();
+    HiveService().init();
     final prefs = locator<PreferenceService>();
     late final String toPage;
     if (prefs.accessToken.isEmpty) {

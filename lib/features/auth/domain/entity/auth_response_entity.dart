@@ -14,7 +14,8 @@ class AuthResponseEntity extends UserEntity {
   });
 
   factory AuthResponseEntity.fromMap(Map<String, dynamic> map) {
-    var user = UserEntity.fromMap(map);
+    final userMap = map['user'] as Map<String, dynamic>;
+    var user = UserEntity.fromMap(userMap);
 
     return AuthResponseEntity(
       token: map['token'],
@@ -22,7 +23,7 @@ class AuthResponseEntity extends UserEntity {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      phone: user.phone,
+      phone: user.phone.toString(),
       role: user.role,
     );
   }

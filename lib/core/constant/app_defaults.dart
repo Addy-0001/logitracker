@@ -6,7 +6,7 @@ import 'package:logitracker/core/theme/app_colors.dart';
 class AppDefaults {
   //default to mobile, can be changed based on the platform
   static DeviceType deviceType = DeviceType.mobile;
-  static String appName = "MovieHUB";
+  static String appName = "LogiTracker";
   static EdgeInsets kPageSidePadding = EdgeInsets.symmetric(horizontal: 16.w);
   static TextStyle headerTitleStyle = TextStyle(
     fontWeight: FontWeight.bold,
