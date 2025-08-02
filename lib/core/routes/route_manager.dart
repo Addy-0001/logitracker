@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:logitracker/core/route/routes.dart';
+import 'package:logitracker/core/routes/routes.dart';
 import 'package:logitracker/features/auth/presentation/view/login_view.dart';
 import 'package:logitracker/features/auth/presentation/view/register_view.dart';
 import 'package:logitracker/features/job/presentation/view/home_view.dart';

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:logitracker/app/app.dart';
-import 'app/constant/hive_service.dart';
-import 'app/service_locator/service_locator.dart';
+import 'package:flutter/services.dart';
+import 'core/database/hive_service.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await HiveService.init();
-  // Hive.registerAdapter(UserHiveModelAdapter());
-  // Hive.registerAdapter(JobHiveModelAdapter());
-  setupServiceLocator();
-  runApp(const App());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
 }

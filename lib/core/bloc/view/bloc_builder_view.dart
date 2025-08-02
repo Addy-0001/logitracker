@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logitracker/core/bloc/state/bloc_state.dart';
-import 'package:logitracker/core/common/widgets/center_hint_text.dart';
-import 'package:logitracker/core/common/widgets/loading_widget.dart';
+import 'package:logitracker/shared/widgets/center_hint_text.dart';
+import 'package:logitracker/shared/widgets/loading_widget.dart';
 
 class BlocBuilderView<B extends StateStreamable<S>, S, LS extends LoadedState>
     extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
-import '../../../../../app/constant/hive_service.dart';
+import '../../../../../core/database/hive_service.dart';
 import '../../model/user_hive_model.dart';
 
 class UserLocalDataSource {
