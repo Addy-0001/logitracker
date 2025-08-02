@@ -3,7 +3,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 
-import 'package:logitracker/features/auth/domain/repository/user_repository.dart';
+import 'package:logitracker/features/auth/domain/repository/auth_repository.dart';
 import 'package:logitracker/features/auth/domain/use_case/user_register_use_case.dart';
 import 'package:logitracker/features/auth/domain/entity/user_entity.dart';
 import 'package:logitracker/core/error/failure.dart';
