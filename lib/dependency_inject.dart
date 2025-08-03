@@ -7,6 +7,12 @@ import 'package:logitracker/features/auth/domain/use_case/login_usecase.dart';
 import 'package:logitracker/features/auth/domain/use_case/register_usecase.dart';
 import 'package:logitracker/features/auth/presentation/view_model/login_view_model/login_view_model.dart';
 import 'package:logitracker/features/auth/presentation/view_model/register_view_model/signup_view_model.dart';
+import 'package:logitracker/features/job/data/data_source/remote_data_source/job_remote_datasource.dart';
+import 'package:logitracker/features/job/data/repository/remote_repository/job_remote_repository.dart';
+import 'package:logitracker/features/job/domain/repository/job_repository.dart';
+import 'package:logitracker/features/job/domain/use_case/get_all_jobs_use_case.dart';
+import 'package:logitracker/features/job/presentation/view/home/home_view.dart';
+import 'package:logitracker/features/job/presentation/view_model/home/home_view_model.dart';
 import 'package:logitracker/services/core/http_service.dart';
 import 'package:logitracker/services/core/preference_service.dart';
 
@@ -40,6 +46,10 @@ _dataSource() {
   locator.registerFactory<AuthRemoteDatasource>(
     () => AuthRemoteDatasource(locator<HttpService>()),
   );
+
+  locator.registerFactory<JobRemoteDatasource>(
+    () => JobRemoteDatasource(locator<HttpService>()),
+  );
 }
 
 _services() {}
@@ -47,6 +57,10 @@ _services() {}
 _repository() {
   locator.registerFactory<IAuthRepository>(
     () => AuthRemoteRepository(locator<AuthRemoteDatasource>()),
+  );
+
+  locator.registerFactory<IJobRepository>(
+    () => JobRemoteRepository(locator<JobRemoteDatasource>()),
   );
 }
 
@@ -58,9 +72,14 @@ _useCase() {
   locator.registerFactory(
     () => RegisterUsecase(authRepository: locator<IAuthRepository>()),
   );
+
+  locator.registerFactory(() => GetAllJobsUseCase(locator<IJobRepository>()));
 }
 
 _viewModel() {
   locator.registerFactory(() => LoginViewModel(locator<LoginUsecase>()));
   locator.registerFactory(() => SignupViewModel(locator<RegisterUsecase>()));
+  locator.registerFactoryParam<HomeViewModel, String?, void>(
+    (id, _) => HomeViewModel(locator<GetAllJobsUseCase>(), id),
+  );
 }

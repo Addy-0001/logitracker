@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:logitracker/features/auth/data/model/user_hive_model.dart';
+// import 'package:logitracker/features/auth/data/model/user_hive_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class HiveService {
@@ -11,6 +11,6 @@ class HiveService {
     Hive.init(path);
 
     //Register Adapter
-    Hive.registerAdapter(UserHiveModelAdapter());
+    // Hive.registerAdapter(UserHiveModelAdapter());
   }
 }

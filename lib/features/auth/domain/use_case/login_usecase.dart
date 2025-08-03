@@ -14,7 +14,7 @@ class LoginUsecase implements UsecaseWithParams<void, LoginEntity> {
   Future<Either<Exception, AuthResponseEntity>> call(LoginEntity params) async {
     try {
       var user = await authRepository.loginuser(params);
-      preferenceService.userName = user.firstName + user.lastName;
+      preferenceService.userName = user.id;
       preferenceService.accessToken = user.token;
       return Right(user);
     } on Exception catch (e) {

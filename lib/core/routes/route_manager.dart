@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:logitracker/core/routes/routes.dart';
 import 'package:logitracker/features/auth/presentation/view/login_view.dart';
 import 'package:logitracker/features/auth/presentation/view/signup_view.dart';
-import 'package:logitracker/features/job/presentation/view/home_view.dart';
-import 'package:logitracker/features/job/presentation/view/profile_view.dart';
+import 'package:logitracker/features/job/presentation/view/home/home_view.dart';
 import 'package:logitracker/features/profile/presentation/profile/view/profile.dart';
 import 'package:logitracker/features/splash/view/splash_view.dart';
+import 'package:logitracker/services/core/preference_service.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -18,7 +18,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case Routes.profilePage:
       return buildRoute(ProfileView());
     case Routes.homePage:
-    // return buildRoute(HomeView());
+      final userId = PreferenceService.keyUsername;
+      return buildRoute(HomeView(id: userId));
     case Routes.jobDetailPage:
     // TODO: Make a job detail page that accepts job id as a parameter and sends request to that page.For now, homeView it is.
     // return buildRoute(HomeView());
@@ -26,7 +27,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     // TODO: Make a map view that accepts job id as a parameter and renders a map using any lib. For now, homeview it is.
     // return buildRoute(HomeView());
     default:
-      return buildRoute(ProfileView());
+      return buildRoute(SplashView());
   }
 }
 

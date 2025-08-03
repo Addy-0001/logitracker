@@ -8,13 +8,13 @@ import 'package:logitracker/core/constant/app_defaults.dart';
 import 'package:logitracker/core/routes/routes.dart';
 import 'package:logitracker/core/theme/themes.dart';
 import 'package:logitracker/dependency_inject.dart';
-import 'package:logitracker/features/auth/presentation/view/login_view.dart';
 import 'package:logitracker/features/auth/presentation/view_model/login_view_model/login_view_model.dart';
+import 'package:logitracker/features/job/presentation/view/home/home_view.dart';
+import 'package:logitracker/features/job/presentation/view_model/home/home_view_model.dart';
 import 'package:logitracker/features/profile/presentation/profile/view_model/user_view_model.dart';
 import 'package:logitracker/services/core/http_service.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
-import 'core/database/hive_service.dart';
 import 'package:logitracker/core/routes/route_manager.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

@@ -24,7 +24,7 @@ class ApiEndpoints {
 
   // JOB SPECIFIC API
   // TODO: this one also needs to append the user id to send the request. The actual endpoint is job/getJobForDriver/:driverId
-  static const getJobs = 'job/getJobForDriver';
+  static const getJobs = 'job';
   // TODO: this one also needs to append the user id to send the request. The actual endpoint is job/getJobById/:jobId
   static const jobDeatils = "job/getJobById";
 
