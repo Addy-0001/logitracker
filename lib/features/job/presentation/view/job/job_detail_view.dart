@@ -321,7 +321,7 @@ class _JobDetailViewState extends State<JobDetailView> {
           icon: const Icon(Icons.map_outlined, color: Colors.white),
           label: const Text(
             "View Map",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+            style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           backgroundColor: Colors.red[700],
           elevation: 8,
@@ -329,7 +329,7 @@ class _JobDetailViewState extends State<JobDetailView> {
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }
