@@ -11,8 +11,11 @@ import 'package:logitracker/features/job/data/data_source/remote_data_source/job
 import 'package:logitracker/features/job/data/repository/remote_repository/job_remote_repository.dart';
 import 'package:logitracker/features/job/domain/repository/job_repository.dart';
 import 'package:logitracker/features/job/domain/use_case/get_all_jobs_use_case.dart';
+import 'package:logitracker/features/job/domain/use_case/get_job_by_id_use_case.dart';
 import 'package:logitracker/features/job/presentation/view/home/home_view.dart';
+import 'package:logitracker/features/job/presentation/view/job/job_detail_view.dart';
 import 'package:logitracker/features/job/presentation/view_model/home/home_view_model.dart';
+import 'package:logitracker/features/job/presentation/view_model/job/job_detail_view_model.dart';
 import 'package:logitracker/services/core/http_service.dart';
 import 'package:logitracker/services/core/preference_service.dart';
 
@@ -74,6 +77,7 @@ _useCase() {
   );
 
   locator.registerFactory(() => GetAllJobsUseCase(locator<IJobRepository>()));
+  locator.registerFactory(() => GetJobByIdUseCase(locator<IJobRepository>()));
 }
 
 _viewModel() {
@@ -81,5 +85,8 @@ _viewModel() {
   locator.registerFactory(() => SignupViewModel(locator<RegisterUsecase>()));
   locator.registerFactoryParam<HomeViewModel, String?, void>(
     (id, _) => HomeViewModel(locator<GetAllJobsUseCase>(), id),
+  );
+  locator.registerFactoryParam<JobDetailViewModel, String, void>(
+    (jobId, _) => JobDetailViewModel(locator<GetJobByIdUseCase>(), jobId),
   );
 }

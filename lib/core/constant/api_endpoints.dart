@@ -26,7 +26,7 @@ class ApiEndpoints {
   // TODO: this one also needs to append the user id to send the request. The actual endpoint is job/getJobForDriver/:driverId
   static const getJobs = 'job';
   // TODO: this one also needs to append the user id to send the request. The actual endpoint is job/getJobById/:jobId
-  static const jobDeatils = "job/getJobById";
+  static const jobDetails = "job/getJobById";
 
   // TODO: This one needs the job id as well. The actual endpoint is job/getAllCoord/:jobId;
   static const getAllCoordinates = "job/getAllCoord";

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logitracker/core/constant/app_defaults.dart';
+import 'package:logitracker/core/routes/routes.dart';
 import 'package:logitracker/dependency_inject.dart';
 import 'package:logitracker/features/job/presentation/view_model/home/home_view_model.dart';
 import 'package:logitracker/features/job/presentation/widget/job_card.dart';
 import 'package:logitracker/shared/widgets/center_hint_text.dart';
+import 'package:logitracker/shared/widgets/custom_ink_well.dart';
 import 'package:logitracker/shared/widgets/form_seperator_box.dart';
 import 'package:logitracker/shared/widgets/loading_widget.dart';
 
@@ -209,7 +211,16 @@ class HomeView extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: JobCard(job: state.jobs[index]),
+                              child: CustomInkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.jobDetailPage,
+                                    arguments: state.jobs[index].id,
+                                  );
+                                },
+                                child: JobCard(job: state.jobs[index]),
+                              ),
                             ),
                           ),
                       separatorBuilder:

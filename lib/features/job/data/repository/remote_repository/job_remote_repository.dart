@@ -12,4 +12,10 @@ class JobRemoteRepository implements IJobRepository {
     var response = await _dataSource.getAllJobs();
     return response;
   }
+
+  @override
+  Future<SingleJobResponse> getJobById(String id) {
+    var response = _dataSource.getJobById(id);
+    return response;
+  }
 }

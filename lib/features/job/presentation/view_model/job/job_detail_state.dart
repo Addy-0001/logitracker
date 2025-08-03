@@ -7,7 +7,7 @@ class JobDetailInitial extends JobDetailState {}
 class JobDetailLoading extends JobDetailState implements LoadingState {}
 
 class JobDetailLoaded extends JobDetailState implements LoadedState {
-  final JobEntity job;
+  final SingleJobResponse job;
   JobDetailLoaded(this.job);
 }
 

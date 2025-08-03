@@ -3,6 +3,7 @@ import 'package:logitracker/core/routes/routes.dart';
 import 'package:logitracker/features/auth/presentation/view/login_view.dart';
 import 'package:logitracker/features/auth/presentation/view/signup_view.dart';
 import 'package:logitracker/features/job/presentation/view/home/home_view.dart';
+import 'package:logitracker/features/job/presentation/view/job/job_detail_view.dart';
 import 'package:logitracker/features/profile/presentation/profile/view/profile.dart';
 import 'package:logitracker/features/splash/view/splash_view.dart';
 import 'package:logitracker/services/core/preference_service.dart';
@@ -21,8 +22,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       final userId = PreferenceService.keyUsername;
       return buildRoute(HomeView(id: userId));
     case Routes.jobDetailPage:
-    // TODO: Make a job detail page that accepts job id as a parameter and sends request to that page.For now, homeView it is.
-    // return buildRoute(HomeView());
+      // TODO: Make a job detail page that accepts job id as a parameter and sends request to that page.For now, homeView it is.
+      final id = settings.arguments as String;
+      if (id.isEmpty) {
+        print("Id is empty");
+      }
+      return buildRoute(JobDetailView(id: id));
     case Routes.jobMapPage:
     // TODO: Make a map view that accepts job id as a parameter and renders a map using any lib. For now, homeview it is.
     // return buildRoute(HomeView());

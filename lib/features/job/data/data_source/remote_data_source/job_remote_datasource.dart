@@ -14,4 +14,10 @@ class JobRemoteDatasource implements IJobDataSource {
         .map((x) => JobEntity.fromMap(x))
         .toList();
   }
+
+  @override
+  Future<SingleJobResponse> getJobById(String id) async {
+    var response = await _httpService.getData('${ApiEndpoints.jobDetails}/$id');
+    return SingleJobResponse.fromMap(response as Map<String, dynamic>);
+  }
 }

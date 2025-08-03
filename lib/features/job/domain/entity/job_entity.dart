@@ -202,3 +202,20 @@ class JobEntity {
         updatedAt.hashCode;
   }
 }
+
+class SingleJobResponse {
+  final bool success;
+  final JobEntity job;
+
+  SingleJobResponse({required this.success, required this.job});
+
+  factory SingleJobResponse.fromMap(Map<String, dynamic> map) {
+    return SingleJobResponse(
+      success: map['success'] as bool,
+      job: JobEntity.fromMap(map['job'] as Map<String, dynamic>),
+    );
+  }
+
+  factory SingleJobResponse.fromJson(String source) =>
+      SingleJobResponse.fromMap(json.decode(source));
+}
