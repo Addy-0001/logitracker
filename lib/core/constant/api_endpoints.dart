@@ -28,8 +28,8 @@ class ApiEndpoints {
   // TODO: this one also needs to append the user id to send the request. The actual endpoint is job/getJobById/:jobId
   static const jobDetails = "job/getJobById";
 
-  // TODO: This one needs the job id as well. The actual endpoint is job/getAllCoord/:jobId;
-  static const getAllCoordinates = "job/getAllCoord";
-  // TODO: This one needs the job id as well. The actual endpoint is job/updateCoord/:jobId;
-  static const updateCoordinates = "job/updateCoord";
+  static const String updateCoord = 'coordinate/updateCoord';
+  static const String getLiveCoord = 'coordinate/getLiveCoord';
+  static const String getCoord = 'coordinate/getCoord';
+  static const String getAllCoord = 'coordinate/getAllCoord';
 }

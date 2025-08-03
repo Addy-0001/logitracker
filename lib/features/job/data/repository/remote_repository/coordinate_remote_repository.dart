@@ -7,9 +7,9 @@ class CoordinateRemoteRepository implements ICoordinateRepository {
   CoordinateRemoteRepository(this._datasource);
 
   @override
-  Future<CoordinateEntity> getAllCoordinates(String jobId) async {
+  Future<JobCoordinates> getAllCoordinates(String jobId) async {
     var response = await _datasource.getAllCoordinates(jobId);
-    return CoordinateEntity.fromMap(response);
+    return JobCoordinates.fromMap(response);
   }
 
   @override
@@ -19,9 +19,9 @@ class CoordinateRemoteRepository implements ICoordinateRepository {
   }
 
   @override
-  Future<CoordinateEntity> getPickupDropoffCoordinates(String jobId) {
+  Future<JobCoordinates> getPickupDropoffCoordinates(String jobId) {
     var response = _datasource.getPickupAndDropoff(jobId);
-    return response.then((data) => CoordinateEntity.fromMap(data));
+    return response.then((data) => JobCoordinates.fromMap(data));
   }
 
   @override

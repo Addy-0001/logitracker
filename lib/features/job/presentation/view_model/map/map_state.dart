@@ -7,7 +7,7 @@ class MapInitial extends MapState {}
 class MapLoading extends MapState {}
 
 class MapLoaded extends MapState {
-  final CoordinateEntity coordinates;
+  final JobCoordinates coordinates;
 
   MapLoaded(this.coordinates);
 }

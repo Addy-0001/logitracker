@@ -6,7 +6,7 @@ class GetPickupDropoffCoordinatesUseCase {
 
   GetPickupDropoffCoordinatesUseCase(this.repository);
 
-  Future<CoordinateEntity> call(String jobId) {
+  Future<JobCoordinates> call(String jobId) {
     return repository.getPickupDropoffCoordinates(jobId);
   }
 }

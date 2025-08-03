@@ -12,5 +12,8 @@ class UpdateLiveCoordinate extends MapEvent {
   final String jobId;
   final CoordinateEntity currentCoordinate;
 
-  UpdateLiveCoordinate({required this.jobId, required this.currentCoordinate});
+  UpdateLiveCoordinate({
+    required this.jobId,
+    required this.currentCoordinate,
+  });
 }

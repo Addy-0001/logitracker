@@ -1,7 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:logitracker/core/domain/use_case/shake_navigation_use_case.dart';
+import 'package:logitracker/features/job/data/data_source/remote_data_source/coordinate_remote_datasource.dart';
+import 'package:logitracker/features/job/data/repository/remote_repository/coordinate_remote_repository.dart';
+import 'package:logitracker/features/job/domain/repository/coordinate_repository.dart';
+import 'package:logitracker/features/job/domain/use_case/get_all_coordinates_use_case.dart';
 import 'package:logitracker/features/job/domain/use_case/get_all_jobs_use_case.dart';
 import 'package:logitracker/features/job/domain/use_case/get_job_by_id_use_case.dart';
+import 'package:logitracker/features/job/domain/use_case/get_pickup_dropoff_coordinate_use_case.dart';
+import 'package:logitracker/features/job/presentation/view_model/map/map_view_model.dart';
 import 'package:logitracker/features/profile/domain/use_case/change_password_use_case.dart';
 import 'package:logitracker/features/profile/domain/use_case/logout_user_use_case.dart';
 import 'package:logitracker/features/profile/presentation/change_password/view_model/change_password_view_model.dart';
@@ -69,6 +75,10 @@ void _dataSource() {
   locator.registerFactory<JobRemoteDatasource>(
     () => JobRemoteDatasource(locator<HttpService>()),
   );
+
+  locator.registerFactory<CoordinateRemoteDatasource>(
+    () => CoordinateRemoteDatasource(locator<HttpService>()),
+  );
 }
 
 void _repository() {
@@ -82,6 +92,10 @@ void _repository() {
 
   locator.registerFactory<IJobRepository>(
     () => JobRemoteRepository(locator<JobRemoteDatasource>()),
+  );
+
+  locator.registerFactory<ICoordinateRepository>(
+    () => CoordinateRemoteRepository(locator<CoordinateRemoteDatasource>()),
   );
 }
 
@@ -109,6 +123,14 @@ void _useCase(PreferenceService preferenceService) {
 
   locator.registerFactory(
     () => ChangePasswordUseCase(locator<IAuthRepository>()),
+  );
+
+  locator.registerFactory(
+    () => GetAllCoordinatesUseCase(locator<ICoordinateRepository>()),
+  );
+
+  locator.registerFactory(
+    () => GetPickupDropoffCoordinatesUseCase(locator<ICoordinateRepository>()),
   );
 }
 
@@ -139,4 +161,6 @@ void _viewModel() {
   locator.registerFactory(
     () => ChangePasswordViewModel(locator<ChangePasswordUseCase>()),
   );
+
+  locator.registerFactory(() => MapViewModel(locator<ICoordinateRepository>()));
 }

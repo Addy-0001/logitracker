@@ -6,7 +6,7 @@ class GetAllCoordinatesUseCase {
 
   GetAllCoordinatesUseCase(this.repository);
 
-  Future<CoordinateEntity> call(String jobId) {
+  Future<JobCoordinates> call(String jobId) {
     return repository.getAllCoordinates(jobId);
   }
 }

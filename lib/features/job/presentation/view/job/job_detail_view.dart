@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logitracker/core/bloc/view/bloc_provider_view.dart';
 import 'package:logitracker/dependency_inject.dart';
+import 'package:logitracker/features/job/domain/repository/coordinate_repository.dart';
+import 'package:logitracker/features/job/presentation/view/map/map_view.dart';
 import 'package:logitracker/features/job/presentation/view_model/job/job_detail_view_model.dart';
 import 'package:logitracker/features/job/domain/entity/job_entity.dart';
+import 'package:logitracker/features/job/presentation/view_model/map/map_view_model.dart';
 
 class JobDetailView extends StatefulWidget {
   final String id;
@@ -119,7 +122,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Job ID Header (simplified)
+                        // Job ID Header
                         _buildHeaderCard(job),
                         const SizedBox(height: 24),
 
@@ -244,7 +247,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                             _buildProminentStatusRow(
                               "Current Status",
                               job.status,
-                            ), // Prominent status
+                            ),
                             _buildInfoRow(
                               "Urgent",
                               job.isUrgent ? 'Yes' : 'No',
@@ -279,7 +282,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                               _buildAddOnChip(
                                 "Fragile Items",
                                 job.addOns.fragileItems,
-                                Icons.free_breakfast,
+                                Icons.broken_image,
                                 Colors.orange,
                               ),
                               _buildAddOnChip(
@@ -301,6 +304,32 @@ class _JobDetailViewState extends State<JobDetailView> {
             ),
           ),
         ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            final jobId = widget.id;
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder:
+                    (_) => BlocProvider(
+                      create:
+                          (_) => MapViewModel(locator<ICoordinateRepository>()),
+                      child: MapView(jobId: jobId),
+                    ),
+              ),
+            );
+          },
+          icon: const Icon(Icons.map_outlined, color: Colors.white),
+          label: const Text(
+            "View Map",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          ),
+          backgroundColor: Colors.red[700],
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
@@ -329,10 +358,17 @@ class _JobDetailViewState extends State<JobDetailView> {
           Text(
             "Job ID: ${job.id}",
             style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
               color: Colors.white,
               letterSpacing: 0.5,
+              shadows: [
+                Shadow(
+                  blurRadius: 5,
+                  color: Colors.black45,
+                  offset: Offset(2, 2),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 12),
@@ -341,7 +377,7 @@ class _JobDetailViewState extends State<JobDetailView> {
               Icon(
                 Icons.calendar_today,
                 color: Colors.white.withOpacity(0.8),
-                size: 16,
+                size: 18,
               ),
               const SizedBox(width: 8),
               Text(
@@ -359,7 +395,7 @@ class _JobDetailViewState extends State<JobDetailView> {
               Icon(
                 Icons.update,
                 color: Colors.white.withOpacity(0.8),
-                size: 16,
+                size: 18,
               ),
               const SizedBox(width: 8),
               Text(
@@ -478,28 +514,26 @@ class _JobDetailViewState extends State<JobDetailView> {
                     color: Colors.grey[600],
                   ),
                 ),
-                const SizedBox(height: 4), // Increased spacing
+                const SizedBox(height: 4),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 8,
-                  ), // Larger padding
+                  ),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(
-                      status,
-                    ).withOpacity(0.15), // Slightly more opaque
-                    borderRadius: BorderRadius.circular(12), // More rounded
+                    color: _getStatusColor(status).withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: _getStatusColor(status).withOpacity(0.4),
-                    ), // Stronger border
+                    ),
                   ),
                   child: Text(
-                    status.toUpperCase(), // Uppercase for prominence
+                    status.toUpperCase(),
                     style: TextStyle(
-                      fontSize: 15, // Slightly larger font
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: _getStatusColor(status),
-                      letterSpacing: 0.5, // Added letter spacing
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ),
@@ -565,7 +599,7 @@ class _JobDetailViewState extends State<JobDetailView> {
   String _formatDate(String dateString) {
     try {
       final date = DateTime.parse(dateString);
-      return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
+      return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
     } catch (e) {
       return dateString;
     }

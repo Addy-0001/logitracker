@@ -5,9 +5,16 @@ class CoordinateEntity {
   CoordinateEntity({required this.latitude, required this.longitude});
 
   factory CoordinateEntity.fromMap(Map<String, dynamic> map) {
+    final lat = map['latitude'];
+    final lng = map['longitude'];
+
+    if (lat == null || lng == null) {
+      throw ArgumentError('Latitude and longitude cannot be null');
+    }
+
     return CoordinateEntity(
-      latitude: (map['latitude'] as num).toDouble(),
-      longitude: (map['longitude'] as num).toDouble(),
+      latitude: double.parse(lat.toString()),
+      longitude: double.parse(lng.toString()),
     );
   }
 
@@ -24,4 +31,46 @@ class CoordinateEntity {
 
   @override
   String toString() => 'CoordinateEntity(lat: $latitude, long: $longitude)';
+}
+
+class JobCoordinates {
+  final CoordinateEntity pickupCoordinates;
+  final CoordinateEntity dropoffCoordinates;
+  final CoordinateEntity? currentCoordinates;
+
+  JobCoordinates({
+    required this.pickupCoordinates,
+    required this.dropoffCoordinates,
+    this.currentCoordinates,
+  });
+
+  factory JobCoordinates.fromMap(Map<String, dynamic> map) {
+    final current = map['currentCoords'];
+    CoordinateEntity? currentCoords;
+
+    if (current != null &&
+        current['latitude'] != null &&
+        current['longitude'] != null) {
+      currentCoords = CoordinateEntity.fromMap(current);
+    }
+
+    return JobCoordinates(
+      pickupCoordinates: CoordinateEntity.fromMap(map['pickupInfo']),
+      dropoffCoordinates: CoordinateEntity.fromMap(map['dropoffInfo']),
+      currentCoordinates: currentCoords,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'pickupCoordinates': pickupCoordinates.toMap(),
+      'dropoffCoordinates': dropoffCoordinates.toMap(),
+      'currentCoordinates': currentCoordinates?.toMap(),
+    };
+  }
+
+  @override
+  String toString() {
+    return 'JobCoordinates(pickup: $pickupCoordinates, dropoff: $dropoffCoordinates, current: $currentCoordinates)';
+  }
 }

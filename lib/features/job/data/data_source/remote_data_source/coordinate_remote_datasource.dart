@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:logitracker/core/constant/api_endpoints.dart';
 import 'package:logitracker/features/job/data/data_source/coordinate_data_source.dart';
 import 'package:logitracker/services/core/http_service.dart';
 
@@ -44,7 +45,9 @@ class CoordinateRemoteDatasource implements CoordinateDataSource {
 
   @override
   Future<Map<String, dynamic>> getAllCoordinates(String jobId) async {
-    final response = await _httpService.getData("/getAllCoord/$jobId");
-    return response['data'];
+    final response = await _httpService.getData(
+      "${ApiEndpoints.getAllCoord}/$jobId",
+    );
+    return Map<String, dynamic>.from(response['data']);
   }
 }
