@@ -8,6 +8,8 @@ class Routes {
 
   // user management
   static const profilePage = '/profile';
+  static const editProfilePae = '/editProfile';
+  static const changePasswordPage = '/changePassword';
 
   // job management
   static const homePage = "/homepage";

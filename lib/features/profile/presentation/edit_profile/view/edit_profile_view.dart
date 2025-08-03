@@ -35,12 +35,9 @@ class _EditProfileViewState extends State<EditProfileView> {
     if (userState is UserLoaded) {
       emailController.text = userState.data.email;
       nameController.text = userState.data.firstName;
-      imageUrl = userState.data.profileImage;
     }
     super.initState();
   }
-
-  // TODO: ADD fields such as phone number and divide the name into firstname and lastname
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +123,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                                         lastName: nameController.text,
                                         phone: nameController.text,
                                         email: emailController.text,
-                                        profileImage: imageUrl,
                                         role: "driver",
                                       ),
                                     ),

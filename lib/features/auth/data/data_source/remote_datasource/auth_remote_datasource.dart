@@ -13,7 +13,7 @@ class AuthRemoteDatasource implements IAuthDataSource {
 
   @override
   Future<String> changePassword(ChangePasswordEntity data) async {
-    var response = await _httpService.postDataJson(
+    var response = await _httpService.patchData(
       ApiEndpoints.updatePassword,
       data: data.toMap(),
     );

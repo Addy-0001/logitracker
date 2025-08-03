@@ -53,13 +53,13 @@ class UserEntity {
 
   factory UserEntity.fromMap(Map<String, dynamic> map) {
     return UserEntity(
-      id: map['_id'],
-      firstName: map['firstName'],
-      lastName: map['lastName'],
-      email: map['email'],
-      phone: map['phone'],
-      profileImage: map['profileImage'],
-      role: map['role'],
+      id: map['_id'] ?? '',
+      firstName: map['firstName'] ?? '',
+      lastName: map['lastName'] ?? '',
+      email: map['email'] ?? '',
+      phone: map['phone'] ?? '',
+      profileImage: map['profileImage'], // already nullable
+      role: map['role'] ?? '',
     );
   }
 

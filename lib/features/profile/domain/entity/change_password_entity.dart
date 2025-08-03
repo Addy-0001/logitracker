@@ -1,28 +1,41 @@
 import 'dart:convert';
 
 class ChangePasswordEntity {
-  final String oldPassword;
+  final String currentPassword;
   final String newPassword;
-  ChangePasswordEntity({required this.oldPassword, required this.newPassword});
+  final String confirmNewPassword;
 
-  ChangePasswordEntity copyWith({String? oldPassword, String? newPassword}) {
+  ChangePasswordEntity({
+    required this.currentPassword,
+    required this.newPassword,
+    required this.confirmNewPassword,
+  });
+
+  ChangePasswordEntity copyWith({
+    String? currentPassword,
+    String? newPassword,
+    String? confirmNewPassword,
+  }) {
     return ChangePasswordEntity(
-      oldPassword: oldPassword ?? this.oldPassword,
+      currentPassword: currentPassword ?? this.currentPassword,
       newPassword: newPassword ?? this.newPassword,
+      confirmNewPassword: confirmNewPassword ?? this.confirmNewPassword,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'oldPassword': oldPassword,
+      'currentPassword': currentPassword,
       'newPassword': newPassword,
+      'confirmNewPassword': confirmNewPassword,
     };
   }
 
   factory ChangePasswordEntity.fromMap(Map<String, dynamic> map) {
     return ChangePasswordEntity(
-      oldPassword: map['oldPassword'] as String,
+      currentPassword: map['currentPassword'] as String,
       newPassword: map['newPassword'] as String,
+      confirmNewPassword: map['confirmNewPassword'] as String,
     );
   }
 
@@ -33,15 +46,20 @@ class ChangePasswordEntity {
 
   @override
   String toString() =>
-      'ChangePasswordEntity(oldPassword: $oldPassword, newPassword: $newPassword)';
+      'ChangePasswordEntity(currentPassword: $currentPassword, newPassword: $newPassword, confirmNewPassword: $confirmNewPassword)';
 
   @override
   bool operator ==(covariant ChangePasswordEntity other) {
     if (identical(this, other)) return true;
 
-    return other.oldPassword == oldPassword && other.newPassword == newPassword;
+    return other.currentPassword == currentPassword &&
+        other.newPassword == newPassword &&
+        other.confirmNewPassword == confirmNewPassword;
   }
 
   @override
-  int get hashCode => oldPassword.hashCode ^ newPassword.hashCode;
+  int get hashCode =>
+      currentPassword.hashCode ^
+      newPassword.hashCode ^
+      confirmNewPassword.hashCode;
 }

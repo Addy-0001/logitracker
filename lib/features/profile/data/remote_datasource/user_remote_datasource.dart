@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:logitracker/core/constant/api_endpoints.dart';
 import 'package:logitracker/core/utility/extension.dart';
+import 'package:logitracker/dependency_inject.dart';
 import 'package:logitracker/features/profile/domain/entity/user_entity.dart';
 import 'package:logitracker/features/profile/data/user_data_source.dart';
 import 'package:logitracker/services/core/http_service.dart';
+import 'package:logitracker/services/core/preference_service.dart';
 
 class UserRemoteDatasource implements IUserDataSoure {
   final HttpService _httpService;
@@ -12,8 +14,13 @@ class UserRemoteDatasource implements IUserDataSoure {
 
   @override
   Future<UserEntity> getUserInformation() async {
-    var response = await _httpService.getData(ApiEndpoints.getUserProfile);
-    return UserEntity.fromMap(response);
+    var uid = locator<PreferenceService>().userName;
+
+    var response = await _httpService.getData(
+      "${ApiEndpoints.getUserProfile}/$uid",
+    );
+    print(response);
+    return UserEntity.fromMap(response['user']);
   }
 
   @override

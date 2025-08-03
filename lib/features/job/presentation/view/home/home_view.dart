@@ -287,23 +287,25 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.red[100],
-                    child: Icon(Icons.person_outline, color: Colors.red[800]),
-                  ),
-                  title: Text(
-                    'View Profile',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey[800],
+                CustomInkWell(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.red[100],
+                      child: Icon(Icons.person_outline, color: Colors.red[800]),
                     ),
+                    title: Text(
+                      'View Profile',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).pushNamed(Routes.profilePage);
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to view profile
-                  },
                 ),
                 ListTile(
                   leading: CircleAvatar(
@@ -320,16 +322,16 @@ class HomeView extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    // Navigate to edit profile
+                    Navigator.of(context).pushNamed(Routes.editProfilePae);
                   },
                 ),
                 ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.red[100],
-                    child: Icon(Icons.logout, color: Colors.red[800]),
+                    child: Icon(Icons.lock_reset, color: Colors.red[800]),
                   ),
                   title: Text(
-                    'Logout',
+                    'Change Password',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -338,7 +340,7 @@ class HomeView extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    // Handle logout
+                    Navigator.of(context).pushNamed(Routes.changePasswordPage);
                   },
                 ),
                 const SizedBox(height: 20),
