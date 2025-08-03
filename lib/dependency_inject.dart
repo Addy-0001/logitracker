@@ -133,7 +133,9 @@ void _viewModel() {
       locator<ShakeNavigationUseCase>(),
     ),
   );
-  locator.registerFactory(() => EditProfileViewModel());
+  locator.registerFactory(
+    () => EditProfileViewModel(locator<IUserRepository>()),
+  );
   locator.registerFactory(
     () => ChangePasswordViewModel(locator<ChangePasswordUseCase>()),
   );

@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logitracker/core/constant/api_endpoints.dart';
-import 'package:logitracker/core/utility/extension.dart';
 import 'package:logitracker/dependency_inject.dart';
 import 'package:logitracker/features/profile/domain/entity/user_entity.dart';
 import 'package:logitracker/features/profile/data/user_data_source.dart';
@@ -25,19 +26,37 @@ class UserRemoteDatasource implements IUserDataSoure {
 
   @override
   Future<String> updateUser(UserEntity data) async {
-    var formData = data.toMap();
-    if (data.profileImage != null && !data.profileImage!.isNetworkFile) {
-      var file = await MultipartFile.fromFile(
-        data.profileImage!,
-        filename: data.profileImage!.split('/').last,
-      );
-      formData['profileImage'] = file;
-    }
+    // Create a map with only allowed fields
+    final allowedUpdates = {
+      'firstName': data.firstName,
+      'lastName': data.lastName,
+      'email': data.email,
+      'phone': data.phone,
+    };
 
-    var response = await _httpService.putDataFormData(
+    var response = await _httpService.patchData(
       ApiEndpoints.updateProfile,
-      data: data,
+      data: allowedUpdates, // Send only allowed fields
     );
     return response['message'].toString();
+  }
+
+  @override
+  Future<String> uploadProfileImage(String imagePath) async {
+    var file = await MultipartFile.fromFile(
+      imagePath,
+      filename: imagePath.split('/').last,
+    );
+
+    FormData formData = FormData.fromMap({'file': file});
+
+    var response = await _httpService.patchFileUpload(
+      ApiEndpoints.uploadAvatar, // define this endpoint
+      fieldName: 'avatar',
+      file: File(imagePath),
+    );
+
+    // Return the new image URL
+    return response['image'] as String;
   }
 }

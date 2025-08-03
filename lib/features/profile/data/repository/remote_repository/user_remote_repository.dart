@@ -16,4 +16,9 @@ class UserRemoteRepository implements IUserRepository {
   Future<String> updateUser(UserEntity data) async {
     return await _datasource.updateUser(data);
   }
+
+  @override
+  Future<String> uploadProfileImage(String imagePath) async {
+    return await _datasource.uploadProfileImage(imagePath);
+  }
 }

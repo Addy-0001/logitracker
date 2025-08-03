@@ -307,6 +307,41 @@ class HttpService {
     return response.data;
   }
 
+  Future<dynamic> patchFileUpload(
+    String url, {
+    required String fieldName,
+    required File file,
+    bool sendToken = true,
+  }) async {
+    if (sendToken) {
+      String token = preferenceService.accessToken;
+      _dio.options.headers.addAll({'Authorization': 'Bearer $token'});
+    } else {
+      _dio.options.headers.clear();
+    }
+
+    _dio.options.contentType = 'multipart/form-data';
+
+    final fileName = file.path.split('/').last;
+    final formData = FormData.fromMap({
+      fieldName: await MultipartFile.fromFile(file.path, filename: fileName),
+    });
+
+    late Response response;
+    try {
+      response = await _dio.patch(ApiEndpoints.baseUrl + url, data: formData);
+    } catch (e) {
+      _handleDioError(e);
+    }
+
+    if (response.data == null) throw "Error Fetching Data";
+    if (!response.statusCode.isSuccessStatusCode()) {
+      throw (response.data.toString());
+    }
+
+    return response.data;
+  }
+
   ///Delete Request with Multipart-Form Data Content-Type
   Future<dynamic> deleteData(String url, {required dynamic data}) async {
     String token = preferenceService.accessToken;
