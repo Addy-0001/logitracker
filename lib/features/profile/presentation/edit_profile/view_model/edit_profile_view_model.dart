@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logitracker/core/bloc/state/bloc_state.dart';
 import 'package:logitracker/features/profile/domain/entity/user_entity.dart';
 import 'package:logitracker/features/profile/domain/repository/user_repository.dart';
 

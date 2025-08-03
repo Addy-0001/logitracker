@@ -4,7 +4,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:logitracker/features/job/presentation/view_model/map/map_view_model.dart';
 import 'package:dio/dio.dart';
-import 'package:logitracker/dependency_inject.dart'; // Assuming locator is here
 
 class MapView extends StatefulWidget {
   final String jobId;

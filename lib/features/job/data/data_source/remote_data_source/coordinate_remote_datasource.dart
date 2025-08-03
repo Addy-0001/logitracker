@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:logitracker/core/constant/api_endpoints.dart';
 import 'package:logitracker/features/job/data/data_source/coordinate_data_source.dart';
 import 'package:logitracker/services/core/http_service.dart';

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logitracker/core/constant/app_defaults.dart';
-import 'package:logitracker/core/helper/ui_helpers.dart';
 import 'package:logitracker/core/utility/validator.dart';
 import 'package:logitracker/features/profile/domain/entity/user_entity.dart';
 import 'package:logitracker/features/profile/presentation/edit_profile/view_model/edit_profile_view_model.dart';
-import 'package:logitracker/dependency_inject.dart'; // your locator
+import 'package:logitracker/dependency_inject.dart'; 
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 

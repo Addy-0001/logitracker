@@ -6,7 +6,6 @@ import 'package:logitracker/core/utility/validator.dart';
 import 'package:logitracker/dependency_inject.dart';
 import 'package:logitracker/features/auth/domain/entity/signup_entity.dart';
 import 'package:logitracker/features/auth/presentation/view_model/register_view_model/signup_view_model.dart';
-import 'package:logitracker/core/routes/routes.dart';
 import 'package:progress_dialog2/progress_dialog2.dart'; // Import Routes for navigation
 
 class SignupView extends StatefulWidget {

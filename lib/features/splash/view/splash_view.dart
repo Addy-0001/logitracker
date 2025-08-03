@@ -4,10 +4,8 @@ import 'package:logitracker/core/constant/app_defaults.dart';
 import 'package:logitracker/core/constant/image_const.dart';
 import 'package:logitracker/core/database/hive_service.dart';
 import 'package:logitracker/core/routes/routes.dart';
-import 'package:logitracker/core/theme/app_colors.dart';
 import 'package:logitracker/dependency_inject.dart';
 import 'package:logitracker/services/core/preference_service.dart';
-import 'package:logitracker/shared/widgets/form_seperator_box.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});

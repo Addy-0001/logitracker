@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logitracker/core/constant/app_defaults.dart';
-import 'package:logitracker/core/helper/ui_helpers.dart'; // Keep this if displayToastSuccess/Failure are used elsewhere
 import 'package:logitracker/core/routes/routes.dart';
-import 'package:logitracker/core/theme/app_colors.dart'; // Keep this if AppColors is used elsewhere
 import 'package:logitracker/dependency_inject.dart';
 import 'package:logitracker/features/profile/presentation/profile/view_model/user_view_model.dart';
 import 'package:logitracker/shared/widgets/circular_image_widget.dart';
-import 'package:logitracker/shared/widgets/form_seperator_box.dart'; // Keep this if FormSeperatorBox is used elsewhere
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
