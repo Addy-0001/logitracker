@@ -7,6 +7,7 @@ import 'package:logitracker/features/job/domain/use_case/get_all_coordinates_use
 import 'package:logitracker/features/job/domain/use_case/get_all_jobs_use_case.dart';
 import 'package:logitracker/features/job/domain/use_case/get_job_by_id_use_case.dart';
 import 'package:logitracker/features/job/domain/use_case/get_pickup_dropoff_coordinate_use_case.dart';
+import 'package:logitracker/features/job/domain/use_case/update_live_coordinate_use_case.dart';
 import 'package:logitracker/features/job/presentation/view_model/map/map_view_model.dart';
 import 'package:logitracker/features/profile/domain/use_case/change_password_use_case.dart';
 import 'package:logitracker/features/profile/domain/use_case/logout_user_use_case.dart';
@@ -16,6 +17,8 @@ import 'package:logitracker/features/profile/presentation/edit_profile/view_mode
 // Services
 import 'package:logitracker/services/core/http_service.dart';
 import 'package:logitracker/services/core/preference_service.dart';
+import 'package:logitracker/services/location/location_service.dart';
+import 'package:logitracker/services/tracking/live_tracking_service.dart';
 
 // Data Sources
 import 'package:logitracker/features/auth/data/data_source/remote_datasource/auth_remote_datasource.dart';
@@ -56,11 +59,15 @@ Future<void> setupDependencies() async {
   final preferenceService = await locator.getAsync<PreferenceService>();
   locator.registerSingleton<HttpService>(HttpService(preferenceService));
 
+  // Register Location Service as singleton
+  locator.registerSingleton<LocationService>(LocationService.instance);
+
   /// Layers
   _dataSource();
   _repository();
   _useCase(preferenceService);
   _viewModel();
+  _services();
 }
 
 void _dataSource() {
@@ -132,6 +139,10 @@ void _useCase(PreferenceService preferenceService) {
   locator.registerFactory(
     () => GetPickupDropoffCoordinatesUseCase(locator<ICoordinateRepository>()),
   );
+
+  locator.registerFactory(
+    () => UpdateLiveCoordinateUseCase(locator<ICoordinateRepository>()),
+  );
 }
 
 void _viewModel() {
@@ -163,4 +174,11 @@ void _viewModel() {
   );
 
   locator.registerFactory(() => MapViewModel(locator<ICoordinateRepository>()));
+}
+
+void _services() {
+  // Register Live Tracking Service as singleton
+  locator.registerSingleton<LiveTrackingService>(
+    LiveTrackingService.create(locator<ICoordinateRepository>()),
+  );
 }

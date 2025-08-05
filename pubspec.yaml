@@ -66,6 +66,8 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   test_cov_console: ^0.2.2
   sensors_plus: ^4.0.2  # Use this instead of shake
+  geolocator: ^10.1.0
+  permission_handler: ^11.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

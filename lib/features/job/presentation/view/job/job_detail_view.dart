@@ -7,6 +7,7 @@ import 'package:logitracker/features/job/presentation/view/map/map_view.dart';
 import 'package:logitracker/features/job/presentation/view_model/job/job_detail_view_model.dart';
 import 'package:logitracker/features/job/domain/entity/job_entity.dart';
 import 'package:logitracker/features/job/presentation/view_model/map/map_view_model.dart';
+import 'package:logitracker/services/tracking/live_tracking_service.dart';
 
 class JobDetailView extends StatefulWidget {
   final String id;
@@ -17,6 +18,59 @@ class JobDetailView extends StatefulWidget {
 }
 
 class _JobDetailViewState extends State<JobDetailView> {
+  bool _isTracking = false;
+  late LiveTrackingService _trackingService;
+
+  @override
+  void initState() {
+    super.initState();
+    _trackingService = LiveTrackingService.instance;
+    _checkTrackingStatus();
+  }
+
+  void _checkTrackingStatus() {
+    setState(() {
+      _isTracking =
+          _trackingService.isTracking &&
+          _trackingService.currentJobId == widget.id;
+    });
+  }
+
+  Future<void> _toggleTracking() async {
+    if (_isTracking) {
+      await _trackingService.stopTracking();
+      setState(() {
+        _isTracking = false;
+      });
+      _showMessage('Live tracking stopped', Colors.orange);
+    } else {
+      final success = await _trackingService.startTracking(widget.id);
+      if (success) {
+        setState(() {
+          _isTracking = true;
+        });
+        _showMessage('Live tracking started', Colors.green);
+      } else {
+        _showMessage(
+          'Failed to start tracking. Please check location permissions.',
+          Colors.red,
+        );
+      }
+    }
+  }
+
+  void _showMessage(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: color,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        margin: const EdgeInsets.all(16),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProviderView<JobDetailViewModel>(
@@ -124,6 +178,10 @@ class _JobDetailViewState extends State<JobDetailView> {
                       children: [
                         // Job ID Header
                         _buildHeaderCard(job),
+                        const SizedBox(height: 16),
+
+                        // Live Tracking Status Card
+                        _buildTrackingStatusCard(),
                         const SizedBox(height: 24),
 
                         // Driver Info
@@ -293,7 +351,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                               ),
                             ],
                           ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 100), // Space for FABs
                       ],
                     ),
                   );
@@ -304,32 +362,130 @@ class _JobDetailViewState extends State<JobDetailView> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            final jobId = widget.id;
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder:
-                    (_) => BlocProvider(
-                      create:
-                          (_) => MapViewModel(locator<ICoordinateRepository>()),
-                      child: MapView(jobId: jobId),
-                    ),
+        floatingActionButton: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Live Tracking FAB
+            FloatingActionButton.extended(
+              heroTag: "liveTracking",
+              onPressed: _toggleTracking,
+              icon: Icon(
+                _isTracking ? Icons.stop : Icons.gps_fixed,
+                color: Colors.white,
               ),
-            );
-          },
-          icon: const Icon(Icons.map_outlined, color: Colors.white),
-          label: const Text(
-            "View Map",
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-          backgroundColor: Colors.red[700],
-          elevation: 8,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+              label: Text(
+                _isTracking ? "Stop Tracking" : "Start Tracking",
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+              ),
+              backgroundColor:
+                  _isTracking ? Colors.orange[700] : Colors.green[700],
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            const SizedBox(height: 12),
+            // View Map FAB
+            FloatingActionButton.extended(
+              heroTag: "viewMap",
+              onPressed: () {
+                final jobId = widget.id;
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder:
+                        (_) => BlocProvider(
+                          create:
+                              (_) => MapViewModel(
+                                locator<ICoordinateRepository>(),
+                              ),
+                          child: MapView(jobId: jobId),
+                        ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.map_outlined, color: Colors.white),
+              label: const Text(
+                "View Map",
+                style: TextStyle(color: Colors.white, fontSize: 14),
+              ),
+              backgroundColor: Colors.red[700],
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      ),
+    );
+  }
+
+  Widget _buildTrackingStatusCard() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors:
+              _isTracking
+                  ? [Colors.green[600]!, Colors.green[800]!]
+                  : [Colors.grey[600]!, Colors.grey[800]!],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: (_isTracking ? Colors.green[800]! : Colors.grey[800]!)
+                .withOpacity(0.3),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(
+              _isTracking ? Icons.gps_fixed : Icons.gps_off,
+              color: Colors.white,
+              size: 24,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _isTracking
+                      ? "Live Tracking Active"
+                      : "Live Tracking Inactive",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  _isTracking
+                      ? "Location updates are being sent automatically"
+                      : "Tap 'Start Tracking' to begin live location updates",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white.withOpacity(0.8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -603,5 +759,10 @@ class _JobDetailViewState extends State<JobDetailView> {
     } catch (e) {
       return dateString;
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -17,7 +17,7 @@ class CoordinateRemoteDatasource implements CoordinateDataSource {
     };
 
     final response = await _httpService.patchData(
-      "/updateCoord/$jobId",
+      "${ApiEndpoints.updateCoord}/$jobId",
       data: data,
     );
 
