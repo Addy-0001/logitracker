@@ -30,5 +30,11 @@ class AuthRemoteDatasource implements IAuthDataSource {
   }
 
   @override
-  Future<void> registerUser(SignupEntity data) async {}
+  Future<void> registerUser(SignupEntity data) async {
+    await _httpService.postDataJson(
+      ApiEndpoints.signup,
+      data: data.toMap(),
+      sendToken: false,
+    );
+  }
 }

@@ -65,7 +65,7 @@ dependencies:
   latlong2: ^0.9.1
   flutter_launcher_icons: ^0.14.4
   test_cov_console: ^0.2.2
-
+  sensors_plus: ^4.0.2  # Use this instead of shake
 dev_dependencies:
   flutter_test:
     sdk: flutter

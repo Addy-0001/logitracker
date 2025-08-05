@@ -8,14 +8,15 @@ void main() {
         firstName: 'John',
         lastName: 'Doe',
         email: 'john@example.com',
-        phoneNumber: '1234567890',
+        phone: '1234567890',
         password: 'password123',
+        confirmPassword: 'password123',
       );
 
       expect(signupEntity.firstName, 'John');
       expect(signupEntity.lastName, 'Doe');
       expect(signupEntity.email, 'john@example.com');
-      expect(signupEntity.phoneNumber, '1234567890');
+      expect(signupEntity.phone, '1234567890');
       expect(signupEntity.password, 'password123');
     });
 
@@ -24,8 +25,9 @@ void main() {
         firstName: 'John',
         lastName: 'Doe',
         email: 'john@example.com',
-        phoneNumber: '1234567890',
+        phone: '1234567890',
         password: 'password123',
+        confirmPassword: 'password123',
       );
 
       final map = signupEntity.toMap();
@@ -33,7 +35,7 @@ void main() {
       expect(map['firstName'], 'John');
       expect(map['lastName'], 'Doe');
       expect(map['email'], 'john@example.com');
-      expect(map['phoneNumber'], '1234567890');
+      expect(map['phone'], '1234567890');
       expect(map['password'], 'password123');
     });
   });

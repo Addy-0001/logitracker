@@ -14,6 +14,7 @@ import 'package:logitracker/services/core/http_service.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
 import 'package:logitracker/core/routes/route_manager.dart';
+import 'package:logitracker/core/utility/mixin/shake_detector_mixin.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -29,9 +30,14 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with ShakeDetectorMixin {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
