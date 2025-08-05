@@ -8,8 +8,8 @@ class JobRemoteRepository implements IJobRepository {
   JobRemoteRepository(this._dataSource);
 
   @override
-  Future<List<JobEntity>> getAllJobs() async {
-    var response = await _dataSource.getAllJobs();
+  Future<List<JobEntity>> getAllJobs({String? driverId}) async {
+    var response = await _dataSource.getAllJobs(driverId: driverId);
     return response;
   }
 

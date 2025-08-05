@@ -64,9 +64,23 @@ class Coordinates {
 
   factory Coordinates.fromMap(Map<String, dynamic> map) {
     return Coordinates(
-      longitude: (map['longitude'] as num?)?.toDouble(),
-      latitude: (map['latitude'] as num?)?.toDouble(),
+      longitude: _parseDouble(map['longitude']),
+      latitude: _parseDouble(map['latitude']),
     );
+  }
+
+  // Helper method to safely parse string or number to double
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      try {
+        return double.parse(value);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
   }
 
   Map<String, dynamic> toMap() {
@@ -101,7 +115,7 @@ class JobEntity {
   final String status;
   final String note;
   final AddOns addOns;
-  final bool isUrgent; // Changed to bool
+  final bool isUrgent;
   final String createdAt;
   final String updatedAt;
 
@@ -136,13 +150,15 @@ class JobEntity {
           map['currentCoords'] as Map<String, dynamic>,
         ),
         status: map['status'] as String,
-        note: map['note'] as String,
+        note: map['note'] as String? ?? '', // Handle null notes
         addOns: AddOns.fromMap(map['addOns'] as Map<String, dynamic>),
-        isUrgent: map['isUrgent'] as bool, // Changed to bool
+        isUrgent: map['isUrgent'] as bool,
         createdAt: map['createdAt'] as String,
         updatedAt: map['updatedAt'] as String,
       );
     } catch (e) {
+      print('Error parsing JobEntity: $e');
+      print('Map data: $map');
       rethrow;
     }
   }

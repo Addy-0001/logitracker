@@ -8,9 +8,9 @@ class GetAllJobsUseCase implements UsecaseWithParams<List<JobEntity>, String?> {
   GetAllJobsUseCase(this._repository);
 
   @override
-  Future<Either<Exception, List<JobEntity>>> call(String? params) async {
+  Future<Either<Exception, List<JobEntity>>> call(String? driverId) async {
     try {
-      var data = await _repository.getAllJobs();
+      var data = await _repository.getAllJobs(driverId: driverId);
       return Right(data);
     } catch (e) {
       return Future.value(Left(Exception(e.toString())));

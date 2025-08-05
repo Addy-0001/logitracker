@@ -151,7 +151,7 @@ void _viewModel() {
   locator.registerFactory(() => SignupViewModel(locator<RegisterUsecase>()));
 
   locator.registerFactoryParam<HomeViewModel, String?, void>(
-    (id, _) => HomeViewModel(locator<GetAllJobsUseCase>(), id),
+    (driverId, _) => HomeViewModel(locator<GetAllJobsUseCase>(), driverId),
   );
 
   locator.registerFactoryParam<JobDetailViewModel, String, void>(

@@ -8,17 +8,17 @@ part 'home_state.dart';
 
 class HomeViewModel extends Bloc<HomeEvent, HomeState> {
   final GetAllJobsUseCase _useCase;
-  final String? id;
+  final String? driverId;
 
-  HomeViewModel(this._useCase, this.id) : super(HomeInitial()) {
+  HomeViewModel(this._useCase, this.driverId) : super(HomeInitial()) {
     on<FetchJobs>(fetchJobs);
-    add(FetchJobs(id));
+    add(FetchJobs(driverId));
   }
 
   Future<void> fetchJobs(FetchJobs event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
 
-    final response = await _useCase.call(id);
+    final response = await _useCase.call(event.driverId);
     response.fold(
       (e) {
         emit(HomeError(e.toString()));
